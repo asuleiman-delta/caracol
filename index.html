@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,300;1,700&display=swap">
+<script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="./caracol-i18n.js"></script>
+<style>
+body{margin:0;background:#9E4624;color:#F1F0E2;font-family:Geist,system-ui,sans-serif;font-weight:500;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#F1F0E2;text-decoration:none}
+a:hover{color:#F2B880}
+button,input,select,textarea{font:inherit;color:inherit}
+::selection{background:#F2B880;color:#752C16}
+:focus-visible{outline:1px solid #F2B880;outline-offset:3px}
+input::placeholder,textarea::placeholder{color:rgba(241,240,226,.45)}
+select option{color:#141413}
+html.lenis,html.lenis body{height:auto}
+.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+@keyframes pulse{0%{transform:scale(1);opacity:.55}100%{transform:scale(3.4);opacity:0}}
+[data-pill]:hover [data-ic]{transform:translateX(3px)}
+[data-car]::-webkit-scrollbar,[data-catbar]::-webkit-scrollbar{display:none}
+@media (hover:hover) and (pointer:fine){
+[data-ir] img,[data-slide] img{scale:1;filter:brightness(1);transition:scale 1.4s cubic-bezier(.16,1,.3,1),filter 1s cubic-bezier(.16,1,.3,1)}
+[data-ir]:hover img,a:hover [data-ir] img,[data-slide]:hover img{scale:1.04}
+a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
+}
+[data-hdr] a,[data-hdr] button{white-space:nowrap}
+@media (max-width:1100px){[data-hdesk]{display:none!important}[data-hmob]{display:grid!important}}
+@media (max-width:860px){
+[data-hero-text] h1{font-size:13vw!important}
+[data-desk]{display:none!important}
+[data-g12]{grid-template-columns:1fr!important;row-gap:28px!important}
+[data-g12]>*{grid-column:1/-1!important}
+[data-col3],[data-col4],[data-col2],[data-steps]{grid-template-columns:1fr!important}
+[data-card]{grid-template-columns:1fr!important}
+[data-card] [data-sq]{order:-1}
+[data-sgrid]{grid-template-columns:1fr!important}
+[data-cartagrid]{grid-template-columns:1fr!important}
+[data-cartagrid]>*{grid-column:1/-1!important}
+[data-catrail]{display:none!important}
+[data-catfab]{display:flex!important}
+[data-noches] [data-slide]{flex-basis:84vw!important}
+[data-noches]{padding-inline:8vw!important}
+[data-narrow]{left:calc(8vw - 22px)!important}
+[data-narrow-r]{right:calc(8vw - 22px)!important}
+[data-about-img]{height:60vh!important}
+}
+@media (min-width:861px){[data-mob]{display:none!important}}
+</style>
+</helmet>
+
+<div style="background:#9E4624;color:#F1F0E2;overflow-x:clip">
+  <div aria-hidden="{{ loaderHidden }}" style="position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:#9a4625;opacity:{{ loaderOp }};visibility:{{ loaderVis }};transition:opacity .7s ease-in-out,visibility 0s linear {{ loaderDelay }}">
+    <img src="assets/loader-caracol.gif" alt="Cargando" style="width:min(56vh,72vw);height:auto;display:block">
+    <img src="assets/caracol-horizontal.png" alt="Caracol" style="position:absolute;left:50%;bottom:clamp(28px,5vh,48px);transform:translateX(-50%);height:22px;width:auto;display:block">
+  </div>
+
+  <header data-hdr="" style="position:fixed;top:0;left:0;right:0;z-index:60;height:64px;display:flex;align-items:stretch;border-bottom:1px solid rgba(241,240,226,.1);transition:background-color .3s cubic-bezier(.4,0,.2,1),backdrop-filter .3s">
+    <a href="#inicio" aria-label="Caracol Bar Restaurant" style="display:flex;align-items:center;padding:0 36px;border-right:1px solid rgba(241,240,226,.1)"><img src="assets/logo-horizontal-crema.png" alt="Caracol Atacama · Bar Restaurant" style="height:30px;width:auto;display:block"></a>
+    <div style="flex:1"></div>
+    <nav data-hdesk="" style="display:flex;align-items:center;gap:32px;padding:0 36px;border-left:1px solid rgba(241,240,226,.1);font-size:14px;letter-spacing:-.02em">
+      <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="5">
+        <a data-nl="{{ n.id }}" href="{{ n.href }}" style="color:rgba(241,240,226,.85);transition:color .25s cubic-bezier(.4,0,.2,1)">{{ n.label }}</a>
+      </sc-for>
+    </nav>
+    <div data-hdesk="" style="display:flex;align-items:center;gap:12px;padding:0 24px;border-left:1px solid rgba(241,240,226,.1);font-size:12px">
+      <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+        <button onClick="{{ l.pick }}" style="background:none;border:0;padding:4px 0;cursor:pointer;color:{{ l.col }};transition:color .2s">{{ l.code }}</button>
+      </sc-for>
+    </div>
+    <a data-hdesk="" data-pill="" href="#carta" style="display:flex;align-items:center;gap:10px;padding:0 36px;border-left:1px solid rgba(241,240,226,.1);font-size:14px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:rgba(241,240,226,.1);color:#F1F0E2">Ver carta <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M7 17L17 7M7 7h10v10"></path></svg></a>
+    <button data-hmob="" onClick="{{ openMenu }}" aria-label="Abrir menú" style="width:64px;display:none;place-items:center;background:none;border:0;border-left:1px solid rgba(241,240,226,.1);cursor:pointer">
+      <span style="display:flex;flex-direction:column;gap:5px"><span style="display:block;width:22px;height:1.5px;background:#F1F0E2"></span><span style="display:block;width:22px;height:1.5px;background:#F1F0E2"></span><span style="display:block;width:22px;height:1.5px;background:#F1F0E2"></span></span>
+    </button>
+  </header>
+
+  <div aria-hidden="{{ menuHidden }}" style="position:fixed;inset:0;z-index:80;background:#9E4624;opacity:{{ menuOp }};visibility:{{ menuVis }};transition:opacity .5s ease-in-out,visibility 0s linear {{ menuDelay }};overflow-y:auto">
+    <div style="height:64px;display:flex;justify-content:space-between;align-items:stretch;border-bottom:1px solid rgba(241,240,226,.1)">
+      <div style="display:flex;align-items:center;padding:0 24px"><img src="assets/logo-crema.png" alt="" style="height:50px;width:auto"></div>
+      <button onClick="{{ closeMenu }}" aria-label="Cerrar menú" style="position:relative;width:64px;background:none;border:0;border-left:1px solid rgba(241,240,226,.1);cursor:pointer">
+        <span style="position:absolute;left:21px;top:31px;width:22px;height:1px;background:#F1F0E2;transform:rotate(45deg)"></span>
+        <span style="position:absolute;left:21px;top:31px;width:22px;height:1px;background:#F1F0E2;transform:rotate(-45deg)"></span>
+      </button>
+    </div>
+    <div style="padding:48px 24px;display:flex;flex-direction:column;gap:48px">
+      <nav style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="5">
+          <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:48px;line-height:1.05;color:rgba(241,240,226,.6);transition:color .3s" style-hover="color:#F1F0E2">{{ n.label }}</a>
+        </sc-for>
+      </nav>
+      <div style="display:flex;flex-direction:column;gap:6px;padding-top:24px;border-top:1px solid rgba(241,240,226,.1);font-size:15px;color:rgba(241,240,226,.6)">
+        <span>Caracoles 219, San Pedro de Atacama</span><span>Lunes a domingo, 16:00–00:00</span><span>+56 0 0000 0000</span>
+      </div>
+      <div style="display:flex;gap:16px;font-size:13px">
+        <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+          <button onClick="{{ l.pick }}" style="background:none;border:0;padding:4px 0;cursor:pointer;color:{{ l.col }}">{{ l.code }}</button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <section id="inicio" data-hero="" data-screen-label="01 Hero" ref="{{ heroRef }}" style="position:relative;height:400vh">
+    <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#B85A2C">
+      <div data-hero-bg="" style="position:absolute;inset:0;transform-origin:50% 50%;will-change:transform">
+        <img src="assets/hero-fondo.jpg?v=3" alt="" style="width:100%;height:100%;object-fit:cover;object-position:50% 30%;display:block">
+      </div>
+      <div data-hero-text="" style="position:absolute;left:0;right:0;top:0;padding:0 6vw;will-change:transform">
+        <h1 data-noi18n="" style="margin:0 auto;text-align:center;font-weight:600;font-size:clamp(40px,7vw,124px);line-height:1;letter-spacing:-.06em;color:#FFFFFF;text-shadow:0 2px 24px rgba(117,44,22,.35)">
+          <sc-for list="{{ heroLines }}" as="ln" hint-placeholder-count="4"><span style="display:block;font-size:{{ ln.fs }};margin:{{ ln.mg }}">
+            <sc-for list="{{ ln.words }}" as="w" hint-placeholder-count="1"><span style="display:inline-block;margin:0 .11em">
+              <sc-if value="{{ w.it }}" hint-placeholder-val="{{ false }}"><span data-w="" style="display:inline-block;will-change:filter,opacity;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;letter-spacing:-.03em;font-size:1.12em;line-height:.86">{{ w.t }}</span></sc-if>
+              <sc-if value="{{ w.rom }}" hint-placeholder-val="{{ true }}"><span data-w="" style="display:inline-block;will-change:filter,opacity">{{ w.t }}</span></sc-if>
+            </span></sc-for>
+          </span></sc-for>
+        </h1>
+        <div data-hero-cta="" style="display:flex;justify-content:center;margin-top:clamp(28px,4vh,48px);opacity:0;will-change:opacity,transform">
+          <a data-pill="" href="#carta" style="display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:999px;background:#F1F0E2;color:#752C16;font-size:16px;letter-spacing:-.02em;box-shadow:0 10px 30px rgba(117,44,22,.3);transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:#F2B880;color:#752C16">Ver carta <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        </div>
+      </div>
+      <div data-hero-fg="" style="position:absolute;inset:0;transform-origin:50% 50%;will-change:transform;pointer-events:none">
+        <img src="assets/hero-pizza.png?v=3" alt="Pizza al horno de barro y una copa de vino sobre la mesa" style="position:absolute;left:50%;bottom:0;width:max(100vw,calc(100vh * 1.7758));height:auto;max-width:none;transform:translateX(-50%) scale(1.1);transform-origin:50% 100%;display:block">
+      </div>
+      <a href="#bienvenida" data-hero-scroll="" style="position:absolute;right:clamp(16px,2.4vw,40px);bottom:clamp(16px,2.4vw,40px);z-index:5;display:flex;align-items:center;gap:14px;color:#F1F0E2;font-size:13px;text-shadow:0 1px 8px rgba(0,0,0,.35);font-weight:600;letter-spacing:.18em">
+        SCROLL
+        <span style="width:56px;height:56px;border-radius:50%;border:1px solid #F1F0E2;background:rgba(117,44,22,.35);display:grid;place-items:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"></path></svg></span>
+      </a>
+    </div>
+  </section>
+
+  <div style="position:relative;z-index:2;margin-top:-100vh;min-height:100vh;background:#9E4624;border-radius:clamp(28px,3.5vw,48px) clamp(28px,3.5vw,48px) 0 0;box-shadow:0 -24px 60px rgba(20,20,19,.35)">
+  <section id="bienvenida" data-screen-label="01b Bienvenida" style="padding:clamp(64px,8vw,112px) 36px 0;scroll-margin-top:88px">
+    <div style="display:flex;flex-wrap:wrap;gap:32px 64px;align-items:flex-end;justify-content:space-between">
+      <div style="flex:1 1 520px;min-width:0;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>Caracol Bar Restaurant</div>
+        <p style="margin:0;max-width:720px;font-size:clamp(22px,2.2vw,32px);line-height:1.25;letter-spacing:-.04em;text-wrap:pretty">Caracol es cocina, barra y música en vivo en Caracoles 219. Abierto todos los días de 16:00 a 00:00.</p>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <a data-pill="" href="#carta" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:#F1F0E2;color:#752C16;font-size:15px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:#F2B880;color:#752C16">Ver carta <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+        <a data-pill="" href="#visitanos" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:rgba(241,240,226,.1);font-size:15px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:rgba(241,240,226,.2);color:#F1F0E2">Cómo llegar</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="cocina" data-screen-label="02 Intro" style="padding:0 36px;border-bottom:1px solid rgba(241,240,226,.1)">
+    <div data-col3="" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(241,240,226,.1);border-top:1px solid rgba(241,240,226,.1);margin:clamp(48px,6vw,88px) -36px 0">
+      <sc-for list="{{ pillars }}" as="p" hint-placeholder-count="3">
+        <a href="{{ p.href }}" style="background:#9E4624;padding:28px 36px 36px;display:flex;flex-direction:column;gap:20px;color:#F1F0E2">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px">
+            <span style="font-size:25px;font-weight:600;letter-spacing:-2px">{{ p.t }}</span>
+            <span style="font-size:13px;color:rgba(241,240,226,.55)">{{ p.d }}</span>
+          </div>
+          <div data-ir="" style="aspect-ratio:1/1;overflow:hidden;border-radius:4px;background:#752C16">
+            <img src="{{ p.img }}" alt="{{ p.t }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+  </div>
+
+  <section data-screen-label="03 About" style="padding:0 36px;border-bottom:1px solid rgba(241,240,226,.1)">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:clamp(72px,9vw,140px) 0 clamp(40px,5vw,72px)">
+      <div style="grid-column:1/4;display:flex;align-items:center;gap:8px;align-self:start;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>El local</div>
+      <h2 data-split="" style="grid-column:4/13;margin:0;font-weight:600;font-size:clamp(36px,4.2vw,72px);line-height:1.1;letter-spacing:-.065em">
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Cocina, barra y música en vivo</span></span>
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">en <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">Caracoles 219</em></span></span>
+      </h2>
+    </div>
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding-bottom:clamp(72px,9vw,140px)">
+      <div data-ir="" data-about-img="" style="grid-column:1/9;height:min(78vh,760px);overflow:hidden;border-radius:4px;background:#752C16">
+        <img src="assets/fachada.jpg" alt="Fachada de Caracol en calle Caracoles, con las puertas azules abiertas" style="width:100%;height:100%;object-fit:cover;object-position:50% 45%;display:block">
+      </div>
+      <div style="grid-column:9/13;display:flex;flex-direction:column;justify-content:space-between;gap:48px">
+        <p data-rv="" style="margin:0;font-size:clamp(17px,1.5vw,22px);line-height:1.2;letter-spacing:-.04em;color:rgba(241,240,226,.85)">Caracol es cocina, barra y música en vivo en Caracoles 219. Al fondo hay una terraza grande para los que prefieren estar afuera. Abierto todos los días de 16:00 a 00:00.</p>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:flex;flex-direction:column;gap:12px;padding:24px 0;border-top:1px solid rgba(241,240,226,.1)">
+            <span data-count="{{ total }}" style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(64px,6.5vw,112px);line-height:1;padding-bottom:.12em">{{ total }}</span>
+            <span style="font-size:13px;color:rgba(241,240,226,.55)">platos en la carta de junio</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;padding:24px 0;border-top:1px solid rgba(241,240,226,.1)">
+            <span data-count="7" style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(64px,6.5vw,112px);line-height:1;padding-bottom:.12em">7</span>
+            <span style="font-size:13px;color:rgba(241,240,226,.55)">días a la semana, de 16:00 a 00:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-sg="" data-screen-label="04 Galería" style="position:relative;height:500vh;background:#752C16">
+    <div data-sgrid="" style="position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 60px;overflow:hidden">
+      <div style="position:relative;overflow:hidden">
+        <sc-for list="{{ gal }}" as="g" hint-placeholder-count="5">
+          <div data-sl="" style="position:absolute;inset:0;z-index:{{ $index }};opacity:{{ g.op }};transition:opacity 1.3s ease-in-out;overflow:hidden">
+            <img src="{{ g.img }}" alt="{{ g.cap }}" style="width:100%;height:100%;object-fit:cover;object-position:{{ g.pos }};display:block;transform:scale(1.06);transition:transform 1.6s ease-out">
+            <div style="position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(0deg,rgba(117,44,22,.92) 0%,rgba(117,44,22,.45) 50%,rgba(117,44,22,0) 100%)"></div>
+
+          </div>
+        </sc-for>
+        <div style="position:absolute;z-index:15;left:36px;right:36px;bottom:clamp(36px,7vh,72px);display:flex;flex-direction:column;gap:10px;pointer-events:none">
+          <span style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(40px,4.4vw,72px);line-height:1;letter-spacing:-.02em">El local</span>
+          <span style="font-size:14px;color:rgba(241,240,226,.8)">Caracoles 219, San Pedro de Atacama</span>
+        </div>
+        <div data-mob="" style="position:absolute;z-index:20;left:0;right:0;top:64px;height:2px;background:rgba(241,240,226,.2)"><span data-mbar="" style="display:block;height:100%;width:0;background:#F2B880"></span></div>
+      </div>
+      <div data-desk="" style="background:#B86240;display:flex;flex-direction:column;align-items:center;padding:96px 0 36px;gap:20px">
+        <div data-track="" style="position:relative;flex:1;width:1px;background:rgba(241,240,226,.35)">
+          <span data-dot="" style="position:absolute;left:-4px;top:0;width:9px;height:9px;border-radius:50%;background:#F1F0E2"></span>
+        </div>
+        <span data-sgc="" style="font-size:12px">01</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="05 Destacados" style="background:#752C16;padding:0 36px">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:end;padding:clamp(72px,9vw,140px) 0 clamp(40px,5vw,72px)">
+      <div style="grid-column:1/-1;display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(241,240,226,.6);margin-bottom:28px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>Destacados de la carta</div>
+      <h2 data-split="" style="grid-column:1/8;margin:0;font-weight:600;font-size:clamp(40px,5.4vw,92px);line-height:1;letter-spacing:-.065em">
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Del horno</span></span>
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block"><em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">de barro</em></span></span>
+      </h2>
+      <p data-rv="" style="grid-column:9/13;margin:0;font-size:clamp(17px,1.5vw,22px);line-height:1.2;letter-spacing:-.04em;color:rgba(241,240,226,.75)">Pizzas, carnes con su jugo y dos piezas grandes para compartir en la mesa. Precios en pesos chilenos.</p>
+    </div>
+    <div data-col2="" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:rgba(241,240,226,.1);border-top:1px solid rgba(241,240,226,.1);border-bottom:1px solid rgba(241,240,226,.1);margin:0 -36px">
+      <sc-for list="{{ featured }}" as="c" hint-placeholder-count="4">
+        <article data-card="" style="background:#752C16;padding:32px 36px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <h3 style="margin:0;font-size:25px;font-weight:600;line-height:1.05;letter-spacing:-2px">{{ c.t }}</h3>
+              <span style="font-size:18px;font-weight:600;letter-spacing:-.02em;color:#F1F0E2">{{ c.p }}</span>
+            </div>
+            <div style="display:flex;flex-direction:column;flex:1">
+              <sc-for list="{{ c.meta }}" as="m" hint-placeholder-count="3">
+                <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-top:1px solid rgba(241,240,226,.1);font-size:13px">
+                  <span style="color:rgba(241,240,226,.55)">{{ m.k }}</span>
+                  <span style="display:flex;align-items:center;gap:8px;text-align:right">{{ m.v }}<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="{{ m.d }}"></path></svg></span>
+                </div>
+              </sc-for>
+            </div>
+            <a data-pill="" href="#carta" style="display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 28px;border-radius:999px;background:rgba(241,240,226,.1);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);font-size:14px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:rgba(241,240,226,.2);color:#F1F0E2">Ver en la carta <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+          </div>
+          <div data-sq="" data-ir="" style="aspect-ratio:1/1;overflow:hidden;border-radius:12px;background:#9E4624;align-self:start">
+            <img src="{{ c.img }}" alt="{{ c.t }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="carta" data-screen-label="07 Carta" style="padding:0 36px;border-bottom:1px solid rgba(241,240,226,.1)">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:clamp(72px,9vw,140px) 0 clamp(40px,5vw,72px)">
+      <div style="grid-column:1/4;display:flex;align-items:center;gap:8px;align-self:start;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>{{ metaCarta }}</div>
+      <div style="grid-column:4/13;display:flex;flex-direction:column;gap:20px">
+        <h2 data-split="" style="margin:0;font-weight:600;font-size:clamp(36px,4.2vw,72px);line-height:1.1;letter-spacing:-.065em">
+          <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Carta y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">precios</em></span></span>
+        </h2>
+        <p style="margin:0;font-size:clamp(17px,1.5vw,22px);line-height:1.2;letter-spacing:-.04em;color:rgba(241,240,226,.6)">Precios en pesos chilenos. Cocina y barra en la misma carta.</p>
+      </div>
+    </div>
+    <div data-catbar="" style="display:none;position:sticky;top:64px;z-index:5;gap:8px;overflow-x:auto;margin:0 -36px;padding:12px 36px;background:#9E4624;border-bottom:1px solid rgba(241,240,226,.1);scrollbar-width:none">
+      <sc-for list="{{ menu }}" as="c" hint-placeholder-count="6">
+        <button data-cb="{{ $index }}" onClick="{{ c.go }}" style="flex:0 0 auto;padding:9px 16px;border-radius:999px;border:0;background:rgba(241,240,226,.1);font-size:13px;cursor:pointer;white-space:nowrap;transition:background-color .25s,color .2s">{{ c.cat }}</button>
+      </sc-for>
+    </div>
+    <div data-cartagrid="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;border-top:1px solid rgba(241,240,226,.1)">
+      <nav data-catrail="" style="grid-column:1/4;position:sticky;top:64px;align-self:start;display:flex;flex-direction:column;padding:32px 24px 32px 0;border-right:1px solid rgba(241,240,226,.1);min-height:calc(100vh - 64px)">
+        <span style="display:block;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid rgba(241,240,226,.1);font-weight:600;font-size:clamp(24px,2vw,32px);line-height:1.05;letter-spacing:-.05em">Carta y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;letter-spacing:-.03em">precios</em></span>
+        <sc-for list="{{ menu }}" as="c" hint-placeholder-count="12">
+          <button data-ci="{{ $index }}" onClick="{{ c.go }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;background:none;border:0;text-align:left;cursor:pointer;font-size:15px;letter-spacing:-.02em;color:rgba(241,240,226,.6);transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F1F0E2">
+            <span>{{ c.cat }}</span><span style="font-size:12px;opacity:.6">{{ c.count }}</span>
+          </button>
+        </sc-for>
+      </nav>
+      <div style="grid-column:4/13;display:flex;flex-direction:column;padding-bottom:clamp(72px,9vw,140px)">
+        <sc-for list="{{ menu }}" as="c" hint-placeholder-count="3">
+          <div data-cat="{{ $index }}" id="{{ c.id }}" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:20px;padding:32px 0 48px;border-bottom:1px solid rgba(241,240,226,.1)">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px">
+              <h3 style="margin:0;font-weight:600;font-size:clamp(28px,2.6vw,40px);line-height:1;letter-spacing:-.055em">{{ c.cat }}</h3>
+              <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:20px;color:rgba(241,240,226,.6)">{{ c.face }}</span>
+            </div>
+            <sc-if value="{{ c.note }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;max-width:640px;font-size:14px;line-height:1.4;color:rgba(241,240,226,.6)">{{ c.note }}</p>
+            </sc-if>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));column-gap:40px">
+              <sc-for list="{{ c.items }}" as="it" hint-placeholder-count="4">
+                <div style="display:flex;flex-direction:column;gap:4px;padding:14px 0;border-top:1px solid rgba(241,240,226,.1)">
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:16px">
+                    <span style="font-size:16px;line-height:1.3;letter-spacing:-.02em">{{ it.t }}</span>
+                    <span style="flex:0 0 auto;font-size:15px;font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums">{{ it.p }}</span>
+                  </div>
+                  <sc-if value="{{ it.d }}" hint-placeholder-val="{{ false }}">
+                    <span style="font-size:13px;line-height:1.4;color:rgba(241,240,226,.55)">{{ it.d }}</span>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+            <sc-if value="{{ c.extra }}" hint-placeholder-val="{{ false }}">
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:16px 40px;padding:20px 24px;border-radius:12px;background:rgba(241,240,226,.1)">
+                <sc-for list="{{ c.extra }}" as="x" hint-placeholder-count="2">
+                  <div style="display:flex;flex-direction:column;gap:4px">
+                    <span style="font-size:13px;font-weight:600;color:#F2B880">{{ x.k }}</span>
+                    <span style="font-size:13px;line-height:1.4;color:rgba(241,240,226,.75)">{{ x.v }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="musica" data-screen-label="08 Música" style="padding:clamp(72px,9vw,140px) 0;border-bottom:1px solid rgba(241,240,226,.1)">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 36px clamp(40px,5vw,72px)">
+      <div style="grid-column:1/4;display:flex;align-items:center;gap:8px;align-self:start;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>Las noches</div>
+      <h2 data-split="" style="grid-column:4/10;margin:0;font-weight:600;font-size:clamp(36px,4.2vw,72px);line-height:1.1;letter-spacing:-.065em">
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Música en vivo</span></span>
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">terraza</em></span></span>
+      </h2>
+      <p data-rv="" style="grid-column:10/13;align-self:end;margin:0;font-size:15px;line-height:1.3;letter-spacing:-.02em;color:rgba(241,240,226,.6)">Percusión, bandas y karaoke en el salón, varias noches por semana.</p>
+    </div>
+    <div style="position:relative">
+      <div data-car="noches" data-noches="" style="display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:0 18vw;scrollbar-width:none;cursor:grab;user-select:none">
+        <sc-for list="{{ noches }}" as="s" hint-placeholder-count="3">
+          <figure data-slide="" style="flex:0 0 64vw;margin:0;scroll-snap-align:center;display:flex;flex-direction:column;gap:14px;transition:opacity .5s ease-in-out">
+            <div style="height:min(70vh,700px);overflow:hidden;border-radius:4px;background:#752C16">
+              <img src="{{ s.img }}" alt="{{ s.alt }}" draggable="false" style="width:100%;height:100%;object-fit:cover;display:block;pointer-events:none">
+            </div>
+            <figcaption style="display:flex;justify-content:space-between;gap:16px;min-height:20px;font-size:13px;color:rgba(241,240,226,.6)"><span style="color:#F1F0E2">{{ s.cap }}</span><span>{{ s.txt }}</span></figcaption>
+          </figure>
+        </sc-for>
+      </div>
+      <button data-narrow="" onClick="{{ nochesPrev }}" aria-label="Anterior" style="position:absolute;left:calc(18vw - 28px);top:calc(min(70vh,700px) / 2);transform:translateY(-50%);width:56px;height:56px;border-radius:50%;border:0;background:#B86240;cursor:pointer;display:grid;place-items:center;transition:background-color .25s cubic-bezier(.4,0,.2,1);z-index:3" style-hover="background:#752C16">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F1F0E2" stroke-width="1.5"><path d="M19 12H5M11 6l-6 6 6 6"></path></svg>
+      </button>
+      <button data-narrow-r="" onClick="{{ nochesNext }}" aria-label="Siguiente" style="position:absolute;right:calc(18vw - 28px);top:calc(min(70vh,700px) / 2);transform:translateY(-50%);width:56px;height:56px;border-radius:50%;border:0;background:#B86240;cursor:pointer;display:grid;place-items:center;transition:background-color .25s cubic-bezier(.4,0,.2,1);z-index:3" style-hover="background:#752C16">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F1F0E2" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:18px;margin-top:36px;font-size:13px">
+      <span data-cc="noches">1</span>
+      <span style="position:relative;width:180px;height:1px;background:rgba(241,240,226,.2);overflow:hidden"><span data-cf="noches" style="position:absolute;left:0;top:0;bottom:0;width:14%;background:#F2B880;transition:width .5s ease-in-out"></span></span>
+      <span style="color:rgba(241,240,226,.55)">{{ nochesTotal }}</span>
+    </div>
+  </section>
+
+  <section id="visitanos" data-screen-label="09 Visítanos" style="padding:0 36px;border-bottom:1px solid rgba(241,240,226,.1)">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:clamp(72px,9vw,140px) 0 clamp(40px,5vw,72px)">
+      <div style="grid-column:1/4;display:flex;align-items:center;gap:8px;align-self:start;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>Ubicación y horarios</div>
+      <h2 data-split="" style="grid-column:4/10;margin:0;font-weight:600;font-size:clamp(36px,4.2vw,72px);line-height:1.1;letter-spacing:-.065em">
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">En plena calle</span></span>
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block"><em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">Caracoles</em></span></span>
+      </h2>
+      <div style="grid-column:10/13;align-self:end;display:flex;flex-direction:column;align-items:flex-start;gap:16px">
+        <p style="margin:0;font-size:15px;line-height:1.3;letter-spacing:-.02em;color:rgba(241,240,226,.6)">Caracoles 219, la calle principal de San Pedro de Atacama.</p>
+        <a data-pill="" href="https://maps.google.com/?q=Caracoles+219+San+Pedro+de+Atacama" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:#F1F0E2;color:#752C16;font-size:14px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:#F2B880;color:#752C16">Cómo llegar <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M7 17L17 7M7 7h10v10"></path></svg></a>
+      </div>
+    </div>
+    <div data-cc-map="" style="position:relative;height:min(70vh,640px);overflow:hidden;border-radius:4px;background:#F7CDA9;margin-bottom:clamp(72px,9vw,140px)">
+      <div data-gmap="" style="position:absolute;inset:0;z-index:3;opacity:{{ gmapOp }};pointer-events:{{ gmapPe }};transition:opacity .6s ease"></div>
+      <a href="https://maps.google.com/?q=Caracoles+219+San+Pedro+de+Atacama" target="_blank" rel="noopener" aria-label="Mapa de Caracol. Arrastra para moverte; clic para abrir en Google Maps" ref="{{ mapRef }}" onPointerDown="{{ mapDown }}" onPointerMove="{{ mapMove }}" onPointerUp="{{ mapUp }}" onPointerCancel="{{ mapUp }}" onClick="{{ mapClick }}" onDragStart="{{ mapNoDrag }}" style="position:absolute;inset:0;display:block;overflow:hidden;touch-action:none;cursor:{{ mapCursor }}">
+        <img src="assets/mapa-caracol.jpg" alt="Mapa de San Pedro de Atacama con la ubicación de Caracol en Caracoles 219" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;transition:{{ mapTrans }};transform-origin:50% 50%;transform:{{ mapScale }};user-select:none;-webkit-user-drag:none;pointer-events:none">
+        <span style="position:absolute;left:50%;top:50%;transition:{{ mapTrans }};transform:{{ pinPos }};display:flex;align-items:center;gap:12px;padding:10px 20px 10px 10px;border-radius:999px;background:#752C16;box-shadow:0 12px 30px rgba(117,44,22,.35);pointer-events:none">
+          <span style="width:30px;height:30px;border-radius:50%;background:#F2B880;display:grid;place-items:center;color:#752C16"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+          <img src="assets/logo-horizontal-crema.png" alt="Caracol" style="height:24px;width:auto;display:block">
+          <span style="position:absolute;left:50%;bottom:-6px;width:14px;height:14px;background:#752C16;transform:translateX(-50%) rotate(45deg)"></span>
+        </span>
+      </a>
+      <div style="position:absolute;inset:0;pointer-events:none;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);-webkit-mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,transparent 55%,#000 100%);mask-image:radial-gradient(ellipse 75% 75% at 50% 50%,transparent 55%,#000 100%)"></div>
+      <div style="position:absolute;right:20px;bottom:20px;display:flex;flex-direction:column;border-radius:999px;overflow:hidden;background:#F1F0E2;box-shadow:0 8px 24px rgba(117,44,22,.25)">
+        <button onClick="{{ mapIn }}" aria-label="Acercar" style="width:44px;height:44px;border:0;background:transparent;color:#752C16;font-size:20px;cursor:pointer;display:grid;place-items:center;transition:background-color .25s,color .2s" style-hover="background:#752C16;color:#F1F0E2">+</button>
+        <span style="height:1px;background:rgba(117,44,22,.15)"></span>
+        <button onClick="{{ mapOut }}" aria-label="Alejar" style="width:44px;height:44px;border:0;background:transparent;color:#752C16;font-size:20px;cursor:pointer;display:grid;place-items:center;transition:background-color .25s,color .2s" style-hover="background:#752C16;color:#F1F0E2">−</button>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="contacto" data-screen-label="10 Contacto" style="background:#752C16;padding:0 36px">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:clamp(72px,9vw,140px) 0">
+      <div data-ir="" style="grid-column:1/6;height:min(80vh,780px);overflow:hidden;border-radius:4px;background:#9E4624">
+        <img src="assets/ev.jpg" alt="Dos clientas leyendo la carta en la entrada" style="width:100%;height:100%;object-fit:cover;object-position:50% 35%;display:block">
+      </div>
+      <div style="grid-column:7/13;display:flex;flex-direction:column;gap:28px">
+        <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>Contacto</div>
+        <h2 data-split="" style="margin:0;font-weight:600;font-size:clamp(44px,6vw,104px);line-height:1;letter-spacing:-.065em">
+          <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Escríbenos</span></span>
+        </h2>
+        <p style="margin:0;font-size:clamp(17px,1.5vw,22px);line-height:1.2;letter-spacing:-.04em;color:rgba(241,240,226,.75)">La vía rápida es WhatsApp. El formulario es para lo que no corre prisa: grupos grandes y eventos.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:10px">
+          <a data-pill="" href="https://wa.me/" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:#F1F0E2;color:#752C16;font-size:14px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:#F2B880;color:#752C16">WhatsApp <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"></path></svg></a>
+          <a data-pill="" href="https://maps.google.com/?q=Caracoles+219+San+Pedro+de+Atacama" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:rgba(241,240,226,.1);backdrop-filter:blur(10px);font-size:14px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:rgba(241,240,226,.2);color:#F1F0E2">Ficha de Google <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M7 17L17 7M7 7h10v10"></path></svg></a>
+        </div>
+        <form onSubmit="{{ submitForm }}" style="display:flex;flex-direction:column;gap:20px;margin-top:20px;padding-top:28px;border-top:1px solid rgba(241,240,226,.1)">
+          <div data-col2="" style="display:grid;grid-template-columns:1fr 1fr;gap:20px 24px">
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(241,240,226,.5)">Motivo
+              <select style="padding:10px 0;background:transparent;border:0;border-bottom:1px solid rgba(241,240,226,.25);font-size:16px;color:#F1F0E2;outline:none;cursor:pointer"><option>Grupo grande</option><option>Evento privado</option><option>Otro</option></select>
+            </label>
+            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(241,240,226,.5)">Nombre
+              <input type="text" style="padding:10px 0;background:transparent;border:0;border-bottom:1px solid rgba(241,240,226,.25);font-size:16px;color:#F1F0E2;outline:none" style-focus="border-bottom-color:#F2B880">
+            </label>
+          </div>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(241,240,226,.5)">Correo o teléfono
+            <input type="text" style="padding:10px 0;background:transparent;border:0;border-bottom:1px solid rgba(241,240,226,.25);font-size:16px;color:#F1F0E2;outline:none" style-focus="border-bottom-color:#F2B880">
+          </label>
+          <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(241,240,226,.5)">Mensaje
+            <textarea rows="3" style="padding:10px 0;background:transparent;border:0;border-bottom:1px solid rgba(241,240,226,.25);font-size:16px;color:#F1F0E2;outline:none;resize:vertical" style-focus="border-bottom-color:#F2B880"></textarea>
+          </label>
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:20px;margin-top:4px">
+            <button data-pill="" type="submit" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;border:0;background:#F1F0E2;color:#752C16;font-size:14px;cursor:pointer;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:#F2B880">{{ sendLabel }} <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
+            <span style="font-size:12px;color:rgba(241,240,226,.5)">Respondemos en horario de local.</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog" data-screen-label="11 Blog" style="padding:0 36px">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:clamp(72px,9vw,140px) 0 clamp(40px,5vw,72px)">
+      <div style="grid-column:1/4;display:flex;align-items:center;gap:8px;align-self:start;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>Blog</div>
+      <h2 data-split="" style="grid-column:4/10;margin:0;font-weight:600;font-size:clamp(36px,4.2vw,72px);line-height:1.1;letter-spacing:-.065em">
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Guías y novedades</span></span>
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block"><em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">de San Pedro</em></span></span>
+      </h2>
+      <div style="grid-column:10/13;align-self:end;display:flex;justify-content:flex-end">
+        <a data-pill="" href="Blog%20Caracol.dc.html" style="display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:rgba(241,240,226,.1);backdrop-filter:blur(10px);font-size:14px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:rgba(241,240,226,.2);color:#F1F0E2">Ver todas <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a>
+      </div>
+    </div>
+    <div data-col3="" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(241,240,226,.1);border-top:1px solid rgba(241,240,226,.1);border-bottom:1px solid rgba(241,240,226,.1);margin:0 -36px">
+      <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
+        <a href="{{ p.href }}" style="background:#9E4624;padding:28px 36px 36px;display:flex;flex-direction:column;gap:18px;color:#F1F0E2" style-hover="color:#F1F0E2">
+          <div data-ir="" style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;background:#752C16">
+            <img src="{{ p.img }}" alt="{{ p.t }}" style="width:100%;height:100%;object-fit:cover;display:block">
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(241,240,226,.55)"><span>{{ p.tag }}</span><span>{{ p.d }}</span></div>
+          <span style="font-size:22px;font-weight:600;line-height:1.1;letter-spacing:-.05em;text-wrap:balance">{{ p.t }}</span>
+        </a>
+      </sc-for>
+    </div>
+  </section>
+
+  <section data-screen-label="12 Cierre" style="padding:clamp(72px,9vw,140px) 0 0">
+    <div data-expand="" style="position:relative;height:clamp(360px,56vh,560px);overflow:hidden;clip-path:inset(0 18% round 12px);background:#7A2E17">
+      <img src="assets/cierre-caracol.gif" alt="" aria-hidden="true" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block">
+      <p style="position:absolute;inset:0;margin:0;display:flex;align-items:center;justify-content:center;padding:0 36px;text-align:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:700;font-size:clamp(56px,9vw,152px);line-height:1;letter-spacing:-.03em;color:#FFFFFF;text-shadow:0 4px 40px rgba(117,44,22,.45)">¡Los esperamos!</p>
+    </div>
+  </section>
+
+  <footer data-screen-label="13 Footer" style="background:#3A160B;padding:0 36px">
+    <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:clamp(64px,7vw,112px) 0 clamp(48px,5vw,72px)">
+      <div style="grid-column:1/4;display:flex;flex-direction:column;gap:20px">
+        <img src="assets/logo-crema.png" alt="Caracol Atacama" style="width:110px;height:auto;display:block">
+        <span style="font-size:13px;line-height:1.4;color:rgba(241,240,226,.6)">Bar y restaurante con música en vivo y terraza, en pleno centro de San Pedro de Atacama.</span>
+      </div>
+      <nav style="grid-column:4/9;display:flex;flex-direction:column">
+        <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="5">
+          <a href="{{ n.href }}" style="font-size:clamp(28px,3vw,48px);font-weight:600;line-height:1.15;letter-spacing:-.06em;transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F2B880">+{{ n.label }}</a>
+        </sc-for>
+      </nav>
+      <div style="grid-column:9/13;display:flex;flex-direction:column;gap:24px;font-size:14px;line-height:1.45">
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Dónde estamos</span><span>Caracoles 219, San Pedro de Atacama, Chile</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Horario</span><span>Lunes a domingo, 16:00–00:00</span></div>
+        <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Contacto</span><a href="tel:+560000000000">+56 0 0000 0000</a><a href="mailto:correo@dominio.cl">correo@dominio.cl</a></div>
+        <div style="display:flex;gap:18px"><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding:20px 0 28px;border-top:1px solid rgba(241,240,226,.1);font-size:12px;color:rgba(241,240,226,.55)">
+      <span>© 2026 Caracol Bar Restaurant. Todos los derechos reservados. Desarrollado por delta digital</span>
+      <div style="display:flex;gap:20px"><a href="#" style="color:rgba(241,240,226,.55)">Términos</a><a href="#" style="color:rgba(241,240,226,.55)">Privacidad</a><a href="#" style="color:rgba(241,240,226,.55)">Cookies</a></div>
+    </div>
+  </footer>
+
+
+<button data-catfab="" onClick="{{ openCats }}" aria-label="Categorías de la carta" style="display:none;position:fixed;right:16px;bottom:16px;z-index:65;align-items:center;gap:10px;height:52px;padding:0 20px 0 16px;border-radius:999px;border:0;background:#F1F0E2;color:#752C16;font-size:14px;font-weight:600;letter-spacing:-.02em;box-shadow:0 10px 28px rgba(60,20,8,.35);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg><span data-catfab-label="">Carta</span></button>
+  <div aria-hidden="{{ catsHidden }}" onClick="{{ closeCats }}" style="position:fixed;inset:0;z-index:90;background:rgba(40,14,6,.55);opacity:{{ catsOp }};visibility:{{ catsVis }};transition:opacity .35s ease,visibility 0s linear {{ catsDelay }}"></div>
+  <div role="dialog" aria-label="Categorías de la carta" aria-hidden="{{ catsHidden }}" style="position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:78vh;overflow-y:auto;padding:20px 24px 28px;border-radius:20px 20px 0 0;background:#752C16;transform:{{ catsT }};visibility:{{ catsVis }};transition:transform .4s cubic-bezier(.2,.7,.2,1),visibility 0s linear {{ catsDelay }}">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <span style="display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600;letter-spacing:-.04em"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg><span>Carta y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.15em">precios</em></span></span>
+      <button onClick="{{ closeCats }}" aria-label="Cerrar" style="width:44px;height:44px;border-radius:50%;border:0;background:rgba(241,240,226,.1);color:#F1F0E2;font-size:20px;cursor:pointer">×</button>
+    </div>
+    <div style="display:flex;flex-direction:column">
+      <sc-for list="{{ menu }}" as="c" hint-placeholder-count="12">
+        <button onClick="{{ c.pick }}" style="display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px;padding:0;border:0;border-top:1px solid rgba(241,240,226,.12);background:none;color:{{ c.fg }};font-size:16px;letter-spacing:-.02em;text-align:left;cursor:pointer"><span>{{ c.cat }}</span><span style="font-size:12px;opacity:.6">{{ c.count }}</span></button>
+      </sc-for>
+    </div>
+  </div>
+  </div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;smoothScroll&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimiento&quot;},&quot;heroMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimiento&quot;},&quot;mapsApiKey&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Mapa&quot;}}">
+const IC = {
+  flame: "M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z",
+  clock: "M12 2a10 10 0 1 0 0 20a10 10 0 1 0 0-20zM12 6v6l4 2",
+  users: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 3a4 4 0 1 0 0 8a4 4 0 1 0 0-8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75",
+  utensils: "M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7",
+  pin: "M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0zM12 7a3 3 0 1 0 0 6a3 3 0 1 0 0-6z",
+  music: "M9 18V5l12-2v13M6 15a3 3 0 1 0 0 6a3 3 0 1 0 0-6zM18 13a3 3 0 1 0 0 6a3 3 0 1 0 0-6z",
+  msg: "M7.9 20A9 9 0 1 0 4 16.1L2 22z"
+};
+class Component extends DCLogic {
+  state = { menuOpen: false, lang: (window.ccGetLang && window.ccGetLang()) || 'ES', cookie: true, sent: false };
+  heroRef = React.createRef();
+  static MAP_STYLE = [{"featureType":"administrative.locality","elementType":"all","stylers":[{"hue":"#2c2e33"},{"saturation":7},{"lightness":19},{"visibility":"on"}]},{"featureType":"administrative.locality","elementType":"labels.text","stylers":[{"visibility":"on"},{"saturation":"-3"}]},{"featureType":"administrative.locality","elementType":"labels.text.fill","stylers":[{"color":"#fd901b"}]},{"featureType":"landscape","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":-100},{"lightness":100},{"visibility":"simplified"}]},{"featureType":"poi","elementType":"all","stylers":[{"hue":"#ffffff"},{"saturation":-100},{"lightness":100},{"visibility":"off"}]},{"featureType":"poi.school","elementType":"geometry.fill","stylers":[{"color":"#f39247"},{"saturation":"0"},{"visibility":"on"}]},{"featureType":"road","elementType":"geometry","stylers":[{"hue":"#ff6f00"},{"saturation":"100"},{"lightness":31},{"visibility":"simplified"}]},{"featureType":"road","elementType":"geometry.stroke","stylers":[{"color":"#f39247"},{"saturation":"0"}]},{"featureType":"road","elementType":"labels","stylers":[{"hue":"#008eff"},{"saturation":-93},{"lightness":31},{"visibility":"on"}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#fd901b"}]},{"featureType":"road.arterial","elementType":"geometry.stroke","stylers":[{"visibility":"on"},{"color":"#f3dbc8"},{"saturation":"0"}]},{"featureType":"road.arterial","elementType":"labels","stylers":[{"hue":"#bbc0c4"},{"saturation":-93},{"lightness":-2},{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.text","stylers":[{"visibility":"off"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"hue":"#e9ebed"},{"saturation":-90},{"lightness":-8},{"visibility":"simplified"}]},{"featureType":"transit","elementType":"all","stylers":[{"hue":"#e9ebed"},{"saturation":10},{"lightness":69},{"visibility":"on"}]},{"featureType":"water","elementType":"all","stylers":[{"hue":"#e9ebed"},{"saturation":-78},{"lightness":67},{"visibility":"simplified"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#e9e9e9"}]}];
+  mapRef = React.createRef();
+  initGmap() {
+    const key = (this.props.mapsApiKey || '').trim(); if (!key) return;
+    const build = () => {
+      if (this._gmapDead || this._gmap) return;
+      const el = document.querySelector('[data-gmap]'); const g = window.google && window.google.maps; if (!el || !g) return;
+      const pos = { lat: -22.9110, lng: -68.2003 };
+      const map = this._gmap = new g.Map(el, { center: pos, zoom: 16, styles: Component.MAP_STYLE, disableDefaultUI: true, zoomControl: true, gestureHandling: 'cooperative', clickableIcons: false, backgroundColor: '#F7CDA9' });
+      const pin = 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="44" height="56" viewBox="0 0 44 56"><path d="M22 2C11 2 3 10.4 3 21c0 13.6 19 33 19 33s19-19.4 19-33C41 10.4 33 2 22 2z" fill="#752C16"/><circle cx="22" cy="21" r="8" fill="#F2B880"/></svg>');
+      const mk = new g.Marker({ map, position: pos, title: 'Caracol · Caracoles 219', icon: { url: pin, scaledSize: new g.Size(44, 56), anchor: new g.Point(22, 54) } });
+      mk.addListener('click', () => window.open('https://maps.google.com/?q=Caracoles+219+San+Pedro+de+Atacama', '_blank', 'noopener'));
+      if (g.Geocoder) new g.Geocoder().geocode({ address: 'Caracoles 219, San Pedro de Atacama, Chile' }, (r, st) => { if (st === 'OK' && r[0]) { const p = r[0].geometry.location; map.setCenter(p); mk.setPosition(p); } });
+      g.event.addListenerOnce(map, 'tilesloaded', () => this.setState({ gmapOn: true }));
+    };
+    if (window.google && window.google.maps) { setTimeout(build, 0); return; }
+    window.__ccGmap = () => build();
+    if (!document.querySelector('script[data-ccgmap]')) {
+      const sc = document.createElement('script'); sc.async = true; sc.dataset.ccgmap = '1';
+      sc.src = 'https://maps.googleapis.com/maps/api/js?key=' + encodeURIComponent(key) + '&callback=__ccGmap';
+      document.head.appendChild(sc);
+    }
+  }
+  clampMap(z, x, y) {
+    const el = this.mapRef.current; if (!el) return { x: 0, y: 0 };
+    const mx = (z - 1) * el.clientWidth / 2, my = (z - 1) * el.clientHeight / 2;
+    return { x: Math.max(-mx, Math.min(mx, x)), y: Math.max(-my, Math.min(my, y)) };
+  }
+  mapVals() {
+    const z = this.state.mapZoom ?? 1.4, x = this.state.mapX || 0, y = this.state.mapY || 0, drag = !!this.state.mapDrag;
+    const zoomTo = nz => this.setState(st => { const cz = st.mapZoom ?? 1.4, k = nz / cz; const c = this.clampMap(nz, (st.mapX || 0) * k, (st.mapY || 0) * k); return { mapZoom: nz, mapX: c.x, mapY: c.y }; });
+    return {
+      mapRef: this.mapRef,
+      gmapOp: this.state.gmapOn ? 1 : 0, gmapPe: this.state.gmapOn ? 'auto' : 'none',
+      mapScale: 'translate(' + x + 'px,' + y + 'px) scale(' + z + ')',
+      pinPos: 'translate(calc(-50% + ' + x + 'px), calc(-100% - 14px + ' + y + 'px))',
+      mapTrans: drag ? 'none' : 'transform .5s cubic-bezier(.2,.7,.2,1)',
+      mapCursor: drag ? 'grabbing' : 'grab',
+      mapIn: () => zoomTo(Math.min(2.8, +(z + 0.35).toFixed(2))),
+      mapOut: () => zoomTo(Math.max(1, +(z - 0.35).toFixed(2))),
+      mapNoDrag: e => e.preventDefault(),
+      mapDown: e => { this._md = { sx: e.clientX, sy: e.clientY, x, y, moved: false }; try { e.currentTarget.setPointerCapture(e.pointerId); } catch (_) {} },
+      mapMove: e => {
+        const d = this._md; if (!d) return;
+        const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+        if (!d.moved && Math.hypot(dx, dy) < 4) return;
+        d.moved = true;
+        const c = this.clampMap(this.state.mapZoom ?? 1.4, d.x + dx, d.y + dy);
+        this.setState({ mapX: c.x, mapY: c.y, mapDrag: true });
+      },
+      mapUp: () => { if (this._md) this._mdMoved = this._md.moved; this._md = null; if (this.state.mapDrag) this.setState({ mapDrag: false }); },
+      mapClick: e => { if (this._mdMoved) { e.preventDefault(); this._mdMoved = false; } }
+    };
+  }
+
+  componentDidMount() {
+    this.initGmap();
+    if (window.ccOnLang) this._lu = window.ccOnLang(l => { if (l !== this.state.lang) this.setState({ lang: l }); });
+    setTimeout(() => { const l = window.ccGetLang && window.ccGetLang(); if (l && l !== this.state.lang) this.setState({ lang: l }); }, 200);
+    const t0 = performance.now();
+    const hide = () => setTimeout(() => this.setState({ loaded: true }), Math.max(0, 1600 - (performance.now() - t0)));
+    if (document.readyState === 'complete') hide(); else window.addEventListener('load', hide, { once: true });
+    this._lf = setTimeout(() => this.setState({ loaded: true }), 6000);
+    this._onScroll = () => { if (!this._raf) this._raf = requestAnimationFrame(() => { this._raf = 0; this.onScroll(); }); };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onScroll);
+    if (this.props.smoothScroll ?? true) {
+      const initL = () => {
+        if (!window.Lenis || this._lenis || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        this._lenis = new window.Lenis({ lerp: 0.08, smoothWheel: true, wheelMultiplier: 1, touchMultiplier: 1.5, anchors: { offset: -88 } });
+        const raf = t => { if (this._lenis) { this._lenis.raf(t); this.heroFrame(); this._lr = requestAnimationFrame(raf); } };
+        this._lr = requestAnimationFrame(raf);
+        this._lenis.on('scroll', this._onScroll);
+      };
+      initL();
+      this._li = setInterval(() => { initL(); if (this._lenis) clearInterval(this._li); }, 300);
+      setTimeout(() => clearInterval(this._li), 6000);
+    }
+    const E = 'cubic-bezier(.215,.61,.355,1)';
+    this._pending = new Set();
+    this._io = { observe: el => this._pending.add(el), disconnect: () => this._pending.clear() };
+    this._reveal = el => {
+      if (el.hasAttribute('data-split')) {
+        el.querySelectorAll('[data-ln]').forEach((l, i) => l.animate([{ transform: 'translateY(110%)' }, { transform: 'translateY(0)' }], { duration: 900, delay: i * 80, easing: E, fill: 'forwards' }).onfinish = () => { l.style.transform = 'none'; });
+      } else if (el.hasAttribute('data-ir')) {
+        el.animate([{ clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 1200, easing: 'cubic-bezier(.65,0,.35,1)', fill: 'forwards' }).onfinish = () => { el.style.clipPath = 'none'; };
+        const im = el.querySelector('img'); if (im) { const an = im.animate([{ transform: 'scale(1.1)' }, { transform: 'scale(1)' }], { duration: 1600, easing: E }); an.onfinish = () => an.cancel(); }
+      } else if (el.hasAttribute('data-count')) {
+        const to = +el.dataset.count, t0 = performance.now();
+        const step = t => { const p = Math.min(1, (t - t0) / 1600); el.textContent = Math.round(to * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(step); };
+        requestAnimationFrame(step);
+      } else {
+        el.style.opacity = 1; el.style.translate = '0 0';
+      }
+    };
+    setTimeout(() => {
+      document.querySelectorAll('[data-split]').forEach(el => { el.querySelectorAll('[data-ln]').forEach(l => l.style.transform = 'translateY(110%)'); this._io.observe(el); });
+      document.querySelectorAll('[data-ir]').forEach(el => { if (el.getBoundingClientRect().top > innerHeight * 0.9) { el.style.clipPath = 'inset(100% 0 0 0)'; this._io.observe(el); } });
+      document.querySelectorAll('[data-count]').forEach(el => { el.textContent = '0'; this._io.observe(el); });
+      document.querySelectorAll('[data-rv]').forEach(el => {
+        if (el.getBoundingClientRect().top > innerHeight * 0.92) {
+          el.style.opacity = 0; el.style.translate = '0 24px';
+          el.style.transition = 'opacity 1s ease, translate 1s cubic-bezier(.215,.61,.355,1)';
+          this._io.observe(el);
+        }
+      });
+      this.onScroll();
+    }, 60);
+    this._safety = setTimeout(() => { if (this._pending) [...this._pending].forEach(el => { if (el.getBoundingClientRect().top < innerHeight) { this._pending.delete(el); this._reveal(el); } }); }, 1500);
+    this._p = null;
+    const hl = () => { if (!this._lenis) this.heroFrame(); this._hl = requestAnimationFrame(hl); };
+    this._hl = requestAnimationFrame(hl);
+    const h = document.querySelector('[data-hero-img]');
+    if (h && h.animate && (this.props.heroMotion ?? true)) this._kb = h.animate([{ transform: 'scale(1.02)' }, { transform: 'scale(1.1)' }], { duration: 24000, easing: 'ease-in-out', iterations: Infinity, direction: 'alternate' });
+    document.querySelectorAll('[data-car]').forEach(el => this.bindCar(el));
+    setTimeout(() => { this.onScroll(); document.querySelectorAll('[data-car]').forEach(el => { this.go(el, 0, 'auto'); this.updCar(el); }); }, 120);
+  }
+
+  componentWillUnmount() {
+    this._gmapDead = true;
+    if (this._lu) this._lu();
+    cancelAnimationFrame(this._hl);
+    clearTimeout(this._lf);
+    cancelAnimationFrame(this._spRaf); if (this._spIdle) this._spIdle.cancel();
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onScroll);
+    if (this._lenis) { this._lenis.destroy(); this._lenis = null; }
+    cancelAnimationFrame(this._lr); clearInterval(this._li);
+    if (this._io) this._io.disconnect();
+    if (this._kb) this._kb.cancel();
+  }
+
+  componentDidUpdate(pp, ps) {
+    if (ps.cats !== this.state.cats && this._lenis) this.state.cats ? this._lenis.stop() : this._lenis.start();
+    if (ps.menuOpen !== this.state.menuOpen && this._lenis) this.state.menuOpen ? this._lenis.stop() : this._lenis.start();
+  }
+
+  heroFrame() {
+    const sec = this.heroRef.current; if (!sec) return;
+    const vh = innerHeight, vw = innerWidth;
+    const r = sec.getBoundingClientRect();
+    if (r.bottom < -vh) return;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const target = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - 2 * vh)));
+    if (this._p === null || reduced) this._p = target; else this._p += (target - this._p) * 0.18;
+    if (Math.abs(target - this._p) < 0.0002) this._p = target;
+    if (this._p === this._pLast && this._mvw === vw && this._mvh === vh) return;
+    this._pLast = this._p;
+    const p = this._p;
+    const q = this._hq || (this._hq = { bg: sec.querySelector('[data-hero-bg]'), fg: sec.querySelector('[data-hero-fg]'), txt: sec.querySelector('[data-hero-text]'), cue: sec.querySelector('[data-hero-scroll]'), cta: sec.querySelector('[data-hero-cta]') });
+    let words = this._hw;
+    if (!words || !words.length || !words[0].isConnected) words = this._hw = [...sec.querySelectorAll('[data-w]')];
+    if (!q.txt || !q.txt.isConnected || !words.length) { this._hq = null; return; }
+    const line = Math.max(200, vh * 0.42);
+    if (!this._m || this._mvw !== vw || this._mvh !== vh || this._m.n !== words.length) {
+      const h = q.txt.firstElementChild.offsetHeight, lh = words[0].offsetHeight;
+      this._m = { n: words.length, start: line - lh / 2, travel: Math.max(0, h - lh) };
+      this._mvw = vw; this._mvh = vh;
+    }
+    const scale = reduced ? 1 : 1 + 0.12 * p;
+    q.bg.style.transform = 'scale(' + scale + ')';
+    const bgBlur = reduced ? 0 : 4 * p;
+    q.bg.style.filter = bgBlur > 0.05 ? 'blur(' + bgBlur.toFixed(2) + 'px)' : 'none';
+    const fgBlur = reduced ? 0 : 2 * (1 - p);
+    q.fg.style.filter = fgBlur > 0.05 ? 'blur(' + fgBlur.toFixed(2) + 'px)' : 'none';
+    q.fg.style.transform = 'translateY(' + (reduced ? 0 : 30 * p) + 'px) scale(' + scale + ')';
+    q.txt.style.transform = 'translateY(' + (this._m.start - Math.min(1, p / 0.85) * this._m.travel) + 'px)';
+    if (q.cta) { const o = reduced ? 1 : Math.min(1, Math.max(0, (p - 0.62) / 0.23)); q.cta.style.opacity = o.toFixed(3); q.cta.style.transform = 'translateY(' + ((1 - o) * 16).toFixed(1) + 'px)'; q.cta.style.pointerEvents = o > 0.5 ? 'auto' : 'none'; }
+    if (q.cue) q.cue.style.opacity = String(Math.max(0, 1 - Math.max(0, p - 0.85) / 0.15));
+    const maxBlur = vw < 700 ? 6 : 12;
+    const rects = words.map(w => w.getBoundingClientRect());
+    words.forEach((w, i) => {
+      if (reduced) { w.style.filter = 'none'; w.style.opacity = '1'; return; }
+      const b = rects[i];
+      const x = (b.left + b.width / 2) / vw - 0.5;
+      const d = ((b.top + b.height / 2) - line) / vh + x * 0.12;
+      let blur = 0, op = 1;
+      if (d > 0) { const t = Math.min(1, d / 0.26); blur = maxBlur * 0.6 * t; op = t < 0.5 ? 1 - t * 0.4 : Math.max(0, 0.8 - (t - 0.5) * 1.8); }
+      else { const t = Math.min(1, -d / 0.34); op = 1 - t; }
+      w.style.filter = blur > 0.05 ? 'blur(' + blur.toFixed(2) + 'px)' : 'none';
+      w.style.opacity = op.toFixed(3);
+    });
+  }
+
+  onScroll() {
+    const vh = innerHeight;
+    const qc = this._qc || (this._qc = {});
+    const qa = sel => { const v = qc[sel]; if (v && v.length && v[0].isConnected) return v; return (qc[sel] = [...document.querySelectorAll(sel)]); };
+    const q1 = sel => { const v = qc[sel]; if (v && v.isConnected) return v; return (qc[sel] = document.querySelector(sel)); };
+    if (this._pending && this._pending.size) [...this._pending].forEach(el => { if (el.getBoundingClientRect().top < vh * 0.88) { this._pending.delete(el); this._reveal(el); } });
+    const hdr = q1('[data-hdr]'), hero = q1('[data-hero]');
+    if (hdr && hero) {
+      const sheet = q1('#bienvenida'); const past = sheet ? sheet.parentElement.getBoundingClientRect().top < 64 : hero.getBoundingClientRect().bottom < 64;
+      if (past === this._past) {} else { this._past = past; hdr.style.background = past ? 'rgba(158,70,36,.97)' : 'transparent';
+       }
+    }
+    let cur = null;
+    ['cocina', 'carta', 'musica', 'visitanos', 'blog'].forEach(id => { const s = q1('#' + id); if (s && s.getBoundingClientRect().top < vh * 0.4) cur = id; });
+    if (cur !== this._curNav) { this._curNav = cur; qa('[data-nl]').forEach(a => a.style.color = a.dataset.nl === cur ? '#F2B880' : 'rgba(241,240,226,.85)'); }
+    qa('[data-sg]').forEach(sec => {
+      const r = sec.getBoundingClientRect();
+      if (r.bottom < -vh || r.top > vh * 2) return;
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - vh)));
+      const slides = sec.querySelectorAll('[data-sl]'), n = slides.length;
+      const a = Math.min(n - 1, Math.floor(p * n)), local = Math.min(1, Math.max(0, p * n - a));
+      slides.forEach((s, i) => {
+        s.style.opacity = i === a ? 1 : 0;
+        const img = s.firstElementChild; if (img) img.style.transform = i === a ? `scale(${(1.08 - 0.06 * local).toFixed(4)})` : 'scale(1.08)';
+      });
+      const dot = sec.querySelector('[data-dot]'), tr = sec.querySelector('[data-track]');
+      if (dot && tr) dot.style.transform = `translateY(${(p * Math.max(0, tr.clientHeight - 9)).toFixed(1)}px)`;
+      const c = sec.querySelector('[data-sgc]'); if (c) c.textContent = String(a + 1).padStart(2, '0');
+      const mb = sec.querySelector('[data-mbar]'); if (mb) mb.style.width = (p * 100).toFixed(1) + '%';
+    });
+    const cats = qa('[data-cat]');
+    { const fab = q1('[data-catfab]'), sec = q1('#carta');
+      if (fab && sec) { const r = sec.getBoundingClientRect(); const on = r.top < vh * 0.5 && r.bottom > vh * 0.6;
+        if (on !== this._fabOn) { this._fabOn = on; fab.style.opacity = on ? 1 : 0; fab.style.pointerEvents = on ? 'auto' : 'none'; fab.style.transform = on ? 'translateY(0)' : 'translateY(12px)'; } } }
+    let act = 0; cats.forEach((c, i) => { if (c.getBoundingClientRect().top < vh * 0.4) act = i; });
+    if (act !== this._act) {
+      this._act = act;
+      if (this.state.catAct !== act) this.setState({ catAct: act });
+      const lb = q1('[data-catfab-label]'); const cn = cats[act] && cats[act].querySelector('h3'); if (lb && cn) lb.textContent = cn.textContent;
+      qa('[data-ci]').forEach((b, i) => b.style.color = i === act ? '#F2B880' : 'rgba(241,240,226,.6)');
+      qa('[data-cb]').forEach((b, i) => {
+        b.style.background = i === act ? '#F1F0E2' : 'rgba(241,240,226,.1)';
+        b.style.color = i === act ? '#752C16' : '#F1F0E2';
+        if (i === act && b.parentElement) b.parentElement.scrollTo({ left: b.offsetLeft - 36, behavior: 'smooth' });
+      });
+    }
+    qa('[data-expand]').forEach(el => {
+      const r = el.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.95)));
+      const e = 1 - Math.pow(1 - p, 2), side = innerWidth <= 860 ? 6 : 18;
+      el.style.clipPath = `inset(0 ${((1 - e) * side).toFixed(2)}% round ${((1 - e) * 12).toFixed(1)}px)`;
+    });
+  }
+
+  slides(el) { return [...el.querySelectorAll('[data-slide]')]; }
+  idx(el) {
+    const ks = this.slides(el); const ref = el.scrollLeft + el.clientWidth / 2;
+    let best = 0, bd = 1e9;
+    ks.forEach((k, i) => { const d = Math.abs(k.offsetLeft + k.offsetWidth / 2 - ref); if (d < bd) { bd = d; best = i; } });
+    return best;
+  }
+  go(el, i, behavior) {
+    const ks = this.slides(el); if (!ks.length) return;
+    i = (i + ks.length) % ks.length; const k = ks[i];
+    el.scrollTo({ left: k.offsetLeft - (el.clientWidth - k.offsetWidth) / 2, behavior: behavior || 'smooth' });
+  }
+  updCar(el) {
+    const ks = this.slides(el), i = this.idx(el), name = el.dataset.car;
+    document.querySelectorAll(`[data-cc="${name}"]`).forEach(c => c.textContent = i + 1);
+    document.querySelectorAll(`[data-cf="${name}"]`).forEach(f => f.style.width = ((i + 1) / ks.length * 100).toFixed(1) + '%');
+    ks.forEach((k, j) => k.style.opacity = j === i ? 1 : 0.4);
+  }
+  bindCar(el) {
+    let down = false, sx = 0, sl = 0;
+    el.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; down = true; sx = e.clientX; sl = el.scrollLeft; el.style.scrollSnapType = 'none'; el.style.cursor = 'grabbing'; });
+    window.addEventListener('pointermove', e => { if (down) el.scrollLeft = sl - (e.clientX - sx); });
+    window.addEventListener('pointerup', () => { if (!down) return; down = false; el.style.cursor = 'grab'; this.go(el, this.idx(el)); setTimeout(() => { el.style.scrollSnapType = 'x mandatory'; }, 650); });
+    el.addEventListener('scroll', () => this.updCar(el), { passive: true });
+  }
+  nav(name, d) {
+    const el = document.querySelector(`[data-car="${name}"]`); if (!el) return;
+    el.style.scrollSnapType = 'none'; this.go(el, this.idx(el) + d);
+    clearTimeout(this._tn); this._tn = setTimeout(() => { el.style.scrollSnapType = 'x mandatory'; }, 700);
+  }
+  scrollToId(id) {
+    const t = document.getElementById(id); if (!t) return;
+    if (this._lenis) this._lenis.scrollTo(t, { offset: -88 }); else window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 88, behavior: 'smooth' });
+  }
+
+  renderVals() {
+    const C = (cat, face, note, rows, extra) => ({ cat, face, note, extra: extra || null, items: rows.map(r => ({ t: r[0], p: r[1], d: r[2] || null })) });
+    const raw = [
+      C("Picoteo", "Cocina", "", [["Tortilla de papas", "$8.500"], ["Caracoles a la Bourguignonne", "$11.000", "6 und."], ["Aceitunas mixtas", "$6.000"], ["Porción de papas fritas", "$5.500"], ["Pimentones asados", "$6.500"]]),
+      C("Ensaladas", "Cocina", "", [["Ensalada Marina", "$14.500", "Mix hojas verdes, salmón ahumado, camarón, queso crema, cebollín, salsa mango de Pica, crutones"], ["Ensalada de Pollo", "$13.500", "Mix hojas verdes, pollo grillado, huevo duro, pimentones asados, aceitunas de Azapa"], ["Ensalada Chèvre chaud", "$13.000", "Mix hojas verdes, tostadas de queso de cabra calientes, vinagreta de miel"], ["Ensalada Española", "$12.000", "Mix hojas verdes, jamón serrano, pimentones asados, aceitunas de Azapa, queso parmesano"], ["Ensalada Verde", "$7.500", "Mix de hojas verdes"], ["Ensalada Apio Palta", "$10.500", "Mix hojas verdes, apio, palta, manzana verde"]]),
+      C("Sopas", "Cocina", "", [["Sopa de cebolla", "$9.500", "Cebolla, queso fundido y crutones"], ["Sopa de zapallo camote", "$9.500", "Zapallo camote, avellanas grilladas"], ["Ajiaco Caracol", "$10.500"]]),
+      C("Canastas", "Cocina", "Con una base de papas fritas y 1 salsa de nuestra casa a elección. Precio individual | familiar.", [["Canasta Caracol", "$11.500 | $16.500", "Vacuno, salsa de queso"], ["Canasta Mixta", "$12.500 | $18.500", "Vacuno, pollo grill, salsa de queso"], ["Canasta del horno", "$13.000 | $19.500", "Vacuno y verduras asadas"], ["Canasta Vegetariana", "$11.500 | $16.500", "Verduras asadas, champiñones y aceitunas"]]),
+      C("Platos", "Cocina", "", [["Ossobuco al horno de barro con su jugo", "$17.000"], ["Cerdo al horno de barro con su jugo", "$16.000"], ["Cordero al horno de barro con su jugo", "$18.000"], ["Confit de pato, salsa de mostaza", "$20.000"], ["Lengua de vacuno, salsa gribiche", "$16.500"], ["Pechuga de pollo a la plancha", "$14.500"], ["Medallón de filete de vacuno grillado", "$18.000"], ["Crudo de res", "$17.000"], ["Merluza austral a la mantequilla", "$16.500", "Con alcaparras o limón"], ["Camarones flambeados a la rica rica", "$17.000"], ["Tofu a la plancha con salsa de soya", "$13.500"]]),
+      C("Acompañamientos", "Cocina", "", [["A lo pobre", "$4.500", "Papas fritas, huevo y cebolla caramelizada"], ["Nortina", "$5.000", "Papas fritas, causeo nortino y pimentones asados"], ["Del Huerto", "$3.500", "Verduras asadas y porotos verdes"], ["Caracol", "$4.500", "Puré de camote, champiñones a la crema"], ["De la Pili", "$4.500", "Risotto y ensalada verde"], ["Dúo", "$4.500", "Elija hasta 2 agregados: papas fritas, risotto, puré de camote, verduras asadas, porotos verdes, champiñones a la crema o ensalada verde"]]),
+      C("Especialidades", "Cocina", "Para 3 a 4 personas · 30 minutos.", [["Garrón de ossobuco", "$49.000", "Con tres agregados y tres salsas a elección"], ["Pernil de cerdo", "$35.000", "Con tres agregados y tres salsas a elección"]],
+        [{ k: "Agregados", v: "Papas fritas, risotto, puré de camote, verduras asadas, porotos verdes, champiñones a la crema o ensalada verde" }]),
+      C("Pizzas al horno de barro", "Cocina", "", [["Napolitana", "$14.500", "Salsa de tomates, mix de quesos, albahaca"], ["Margarita", "$15.500", "Salsa de tomates, mix de quesos, tomate, albahaca"], ["4 Quesos", "$17.000", "Salsa de tomates, queso crema, queso azul, queso mozzarella, queso mantecoso"], ["Vegana", "$17.000", "Salsa de tomates, albahaca, camote, pimentones asados, aceitunas"], ["Francesa", "$18.500", "Salsa de tomates, ossobuco al horno, médula, mix de quesos, cebolla morada"], ["Española", "$18.500", "Salsa de tomates, chorizo, anchoas, aceitunas, pimientos asados y mix de quesos"], ["Alemana", "$17.000", "Salsa de tomates, pernil, cebolla caramelizada, chucrut, mix de quesos"], ["Inglesa", "$17.500", "Salsa de tomates, cordero, menta, palta, mix de quesos"], ["Caracol", "$18.000", "Salsa de tomates, carnes asadas, huevo, mix de quesos"]]),
+      C("Pastas frescas", "Cocina", "", [["Pasta con salsa Pomodoro", "$13.500"], ["Pasta con salsa Pesto", "$13.500"], ["Pasta con salsa Carbonara", "$13.500"], ["Pasta con salsa Bolognesa", "$13.500"]]),
+      C("Arma tu sándwich", "Cocina", "Todos acompañados de papas fritas. Pan: baguette. Elige la proteína, un relleno y una salsa.", [["Ossobuco al horno", "$17.500"], ["Cordero al horno", "$17.500"], ["Lengua de vacuno", "$16.500"], ["Verduras al horno", "$14.500"], ["Pollo a la plancha", "$14.500"], ["Filete de res a la plancha", "$17.500"], ["Tofu a la plancha", "$15.500"]],
+        [{ k: "Relleno 1", v: "Palta, porotos verdes, ají verde, tomate" }, { k: "Relleno 2", v: "Pimentón asado, causeo nortino" }, { k: "Relleno 3", v: "Verduras asadas, ají verde, queso mantecoso" }, { k: "Relleno 4", v: "Champiñones, cebolla caramelizada, queso mantecoso, palta" }, { k: "Relleno 5", v: "Queso azul, cebolla caramelizada y pimentón" }, { k: "Salsa", v: "Ajo, ají, verde o aceituna" }]),
+      C("Postres", "Cocina", "", [["Éclair del día", "$6.500"], ["Mousse de chocolate", "$8.800"], ["Crème brûlée", "$7.600"], ["Plátano flambé", "$9.000", "Con tostada francesa y helado de vainilla"], ["Crumble de fruta al horno de barro", "$11.000", "Con helado de vainilla"]]),
+      C("Bebidas calientes", "Barra", "", [["Té de hoja de la casa", "$3.500"], ["Espresso simple", "$2.000"], ["Espresso doble", "$2.800"], ["Americano", "$2.800"]])
+    ];
+    const menu = raw.map((c, i) => ({ ...c, id: 'cat-' + i, note: c.note || null, count: String(c.items.length).padStart(2, '0'), go: () => this.scrollToId('cat-' + i), pick: () => { this.setState({ cats: false }); setTimeout(() => this.scrollToId('cat-' + i), 60); }, fg: (this.state.catAct || 0) === i ? '#F2B880' : '#F1F0E2' }));
+    const total = menu.reduce((t, c) => t + c.items.length, 0);
+    const open = this.state.menuOpen;
+    const sand = raw[9].items;
+    const noches = [
+      { img: 'assets/n1.jpg', cap: 'Salón', txt: 'Donde toca la banda y se canta karaoke.', alt: 'Músico en vivo frente al mural de montañas' },
+      { img: 'assets/n2.jpg', cap: 'Barra', txt: 'Para sentarse solo o de paso.', alt: 'Músico tocando junto a la barra' },
+      { img: 'assets/n5.jpg', cap: 'Terraza', txt: 'Al fondo, al aire libre.', alt: 'Terraza al fondo del local' },
+      { img: 'assets/n3.jpg', cap: '', txt: '', alt: 'Salón con muros de ramas' },
+      { img: 'assets/n6.jpg', cap: '', txt: '', alt: 'Pareja leyendo la carta' },
+      { img: 'assets/n4.jpg', cap: '', txt: '', alt: 'Salón lleno' },
+      { img: 'assets/n7.jpg', cap: '', txt: '', alt: 'Amigas en el salón' }
+    ];
+    const ld = !!this.state.loaded;
+    return {
+      ...this.mapVals(),
+      openCats: () => this.setState({ cats: true }), closeCats: () => this.setState({ cats: false }),
+      catsOp: this.state.cats ? 1 : 0, catsVis: this.state.cats ? 'visible' : 'hidden', catsDelay: this.state.cats ? '0s' : '.4s', catsHidden: this.state.cats ? 'false' : 'true', catsT: this.state.cats ? 'translateY(0)' : 'translateY(105%)',
+      heroRef: this.heroRef,
+      heroLines: (({ ES: ['Caracol,', 'bar y restaurante', '*en *San *Pedro', '*de *Atacama'], EN: ['Caracol,', 'bar and restaurant', '*in *San *Pedro', '*de *Atacama'], PT: ['Caracol,', 'bar e restaurante', '*em *San *Pedro', '*de *Atacama'], FR: ['Caracol,', 'bar et restaurant', '*à *San *Pedro', '*de *Atacama'] })[this.state.lang] || ['Caracol,', 'bar y restaurante', '*en *San *Pedro', '*de *Atacama']).map((l, i) => ({ fs: i === 1 ? '.7em' : '1em', mg: i === 1 ? '.12em 0 .18em' : '0', words: l.split(' ').map(t => ({ t: t.replace('*', ''), it: t[0] === '*' ? true : null, rom: t[0] !== '*' ? true : null })) })),
+      loaderOp: ld ? 0 : 1, loaderVis: ld ? 'hidden' : 'visible', loaderDelay: ld ? '.7s' : '0s', loaderHidden: ld ? 'true' : 'false',
+      langs: ['ES', 'EN', 'PT', 'FR'].map(code => ({ code, col: this.state.lang === code ? '#F2B880' : 'rgba(241,240,226,.6)', pick: () => { this.setState({ lang: code }); if (window.ccSetLang) window.ccSetLang(code); } })),
+      navLinks: [
+        { id: 'cocina', label: 'Cocina y barra', href: '#cocina' }, { id: 'carta', label: 'Carta', href: '#carta' }, { id: 'musica', label: 'Música', href: '#musica' },
+        { id: 'visitanos', label: 'Visítanos', href: '#visitanos' }, { id: 'blog', label: 'Blog', href: 'Blog%20Caracol.dc.html' }
+      ],
+      openMenu: () => this.setState({ menuOpen: true }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      menuOp: open ? 1 : 0, menuVis: open ? 'visible' : 'hidden', menuDelay: open ? '0s' : '.5s', menuHidden: open ? 'false' : 'true',
+      pillars: [
+        { t: 'Restaurante', d: '/ ' + (menu.length - 1) + ' categorías', img: 'assets/ra1.jpg', href: '#carta' },
+        { t: 'Bar', d: '/ cocteles y schop', img: 'assets/ba1.jpg', href: '#carta' },
+        { t: 'Música', d: '/ en vivo', img: 'assets/n1.jpg', href: '#musica' }
+      ],
+      total,
+      gal: [
+        { img: 'assets/chef.jpg', k: 'El local', cap: 'La chimenea', pos: '50% 75%' },
+        { img: 'assets/hero.jpg', k: 'El local', cap: 'El salón del mural' },
+        { img: 'assets/n3.jpg', k: 'El local', cap: 'Muros de ramas' },
+        { img: 'assets/n4.jpg', k: 'El local', cap: 'Noches de salón lleno' },
+        { img: 'assets/n5.jpg', k: 'El local', cap: 'La terraza' }
+      ].map((g, i) => ({ pos: '50% 50%', ...g, op: i === 0 ? 1 : 0 })),
+      featured: [
+        { t: 'Pizza Española', p: '$18.500', img: 'assets/ra1.jpg', meta: [{ k: 'Categoría', v: 'Pizzas al horno de barro', d: IC.flame }, { k: 'Lleva', v: 'Chorizo, anchoas, aceitunas', d: IC.utensils }, { k: 'Para', v: '1 a 2 personas', d: IC.users }] },
+        { t: 'Pasta con salsa Pesto', p: '$13.500', img: 'assets/ra2.jpg', meta: [{ k: 'Categoría', v: 'Pastas frescas', d: IC.utensils }, { k: 'Salsa', v: 'Pesto', d: IC.flame }, { k: 'Para', v: '1 persona', d: IC.users }] },
+        { t: 'Merluza austral a la mantequilla', p: '$16.500', img: 'assets/ra3.jpg', meta: [{ k: 'Categoría', v: 'Platos', d: IC.utensils }, { k: 'Con', v: 'Alcaparras o limón', d: IC.flame }, { k: 'Para', v: '1 persona', d: IC.users }] },
+        { t: 'Sándwich de ossobuco al horno', p: '$17.500', img: 'assets/ra4.jpg', meta: [{ k: 'Categoría', v: 'Arma tu sándwich', d: IC.utensils }, { k: 'Pan', v: 'Baguette', d: IC.flame }, { k: 'Incluye', v: 'Papas fritas', d: IC.clock }] }
+      ],
+      proteins: sand,
+      steps: [
+        { n: '01', t: 'Elige la proteína', d: 'Siete opciones, desde $14.500.' },
+        { n: '02', t: 'Elige el relleno', d: 'Cinco combinaciones de la casa.' },
+        { n: '03', t: 'Elige la salsa', d: 'Ajo, ají, verde o aceituna.' },
+        { n: '04', t: 'A la mesa', d: 'En baguette, con papas fritas.' }
+      ],
+      menu,
+      metaCarta: 'Carta junio 2026 · ' + total + ' platos',
+      noches, nochesTotal: noches.length,
+      nochesPrev: () => this.nav('noches', -1), nochesNext: () => this.nav('noches', 1),
+      visit: [
+        { n: '01', t: 'Horario', x: 'Lunes a domingo, de 16:00 a 00:00.', d: IC.clock },
+        { n: '02', t: 'Dirección', x: 'Caracoles 219, San Pedro de Atacama.', d: IC.pin },
+        { n: '03', t: 'Música en vivo', x: 'Percusión, bandas y karaoke varias noches por semana.', d: IC.music },
+        { n: '04', t: 'Grupos y eventos', x: 'Escríbenos por el formulario de contacto.', d: IC.msg }
+      ],
+      posts: [
+        { tag: 'Guía de San Pedro', t: 'Qué hacer en San Pedro de Atacama por la tarde', img: 'assets/b1.jpg' },
+        { tag: 'Novedades', t: 'La agenda de música en vivo de este mes', img: 'assets/b2.jpg' },
+        { tag: 'Guía de San Pedro', t: 'Cómo llegar al Valle de la Luna por tu cuenta', img: 'assets/b5.jpg' }
+      ].map(p => ({ ...p, d: '00 mes 0000', href: 'Blog%20Articulo%20Caracol.dc.html' })),
+      sendLabel: this.state.sent ? 'Mensaje enviado' : 'Enviar',
+      submitForm: e => { e.preventDefault(); this.setState({ sent: true }); },
+      showCookie: (this.props.cookieBanner ?? true) && this.state.cookie ? true : null,
+      acceptCookie: () => this.setState({ cookie: false })
+    };
+  }
+}
+</script>
+</body>
+</html>
