@@ -267,20 +267,20 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
     </div>
     <div data-catbar="" style="display:none;position:sticky;top:64px;z-index:5;gap:8px;overflow-x:auto;margin:0 -36px;padding:12px 36px;background:#9E4624;border-bottom:1px solid rgba(241,240,226,.1);scrollbar-width:none">
       <sc-for list="{{ menu }}" as="c" hint-placeholder-count="6">
-        <button data-cb="{{ $index }}" onClick="{{ c.go }}" style="flex:0 0 auto;padding:9px 16px;border-radius:999px;border:0;background:rgba(241,240,226,.1);font-size:13px;cursor:pointer;white-space:nowrap;transition:background-color .25s,color .2s">{{ c.cat }}</button>
+        <button data-cb="{{ $index }}" onClick="{{ c.go }}" style="flex:0 0 auto;padding:9px 16px;border-radius:999px;border:0;background:{{ c.pbg }};color:{{ c.pfg }};font-size:13px;cursor:pointer;white-space:nowrap;transition:background-color .25s,color .2s">{{ c.cat }}</button>
       </sc-for>
     </div>
     <div data-cartagrid="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;border-top:1px solid rgba(241,240,226,.1)">
       <nav data-catrail="" style="grid-column:1/4;position:sticky;top:64px;align-self:start;display:flex;flex-direction:column;padding:32px 24px 32px 0;border-right:1px solid rgba(241,240,226,.1);min-height:calc(100vh - 64px)">
         <span style="display:block;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid rgba(241,240,226,.1);font-weight:600;font-size:clamp(24px,2vw,32px);line-height:1.05;letter-spacing:-.05em">Carta y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;letter-spacing:-.03em">precios</em></span>
         <sc-for list="{{ menu }}" as="c" hint-placeholder-count="12">
-          <button data-ci="{{ $index }}" onClick="{{ c.go }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;background:none;border:0;text-align:left;cursor:pointer;font-size:15px;letter-spacing:-.02em;color:rgba(241,240,226,.6);transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F1F0E2">
+          <button data-ci="{{ $index }}" onClick="{{ c.go }}" style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:7px 0;background:none;border:0;text-align:left;cursor:pointer;font-size:15px;letter-spacing:-.02em;color:{{ c.rail }};transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F1F0E2">
             <span>{{ c.cat }}</span><span style="font-size:12px;opacity:.6">{{ c.count }}</span>
           </button>
         </sc-for>
       </nav>
-      <div style="grid-column:4/13;display:flex;flex-direction:column;padding-bottom:clamp(72px,9vw,140px)">
-        <sc-for list="{{ menu }}" as="c" hint-placeholder-count="3">
+      <div id="carta-list" style="grid-column:4/13;display:flex;flex-direction:column;padding-bottom:clamp(72px,9vw,140px);min-height:calc(100vh - 64px)">
+        <sc-for list="{{ menuShown }}" as="c" hint-placeholder-count="1">
           <div data-cat="{{ $index }}" id="{{ c.id }}" style="scroll-margin-top:96px;display:flex;flex-direction:column;gap:20px;padding:32px 0 48px;border-bottom:1px solid rgba(241,240,226,.1)">
             <div style="display:flex;align-items:baseline;justify-content:space-between;gap:24px">
               <h3 style="margin:0;font-weight:600;font-size:clamp(28px,2.6vw,40px);line-height:1;letter-spacing:-.055em">{{ c.cat }}</h3>
@@ -314,6 +314,7 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
             </sc-if>
           </div>
         </sc-for>
+        <button onClick="{{ nextCat.go }}" style="align-self:flex-end;display:inline-flex;align-items:center;gap:12px;margin-top:32px;padding:14px 24px;border-radius:999px;border:0;background:rgba(241,240,226,.1);color:#F1F0E2;font-size:15px;letter-spacing:-.02em;cursor:pointer;transition:background-color 1.4s cubic-bezier(.2,.7,.2,1),color 1.4s cubic-bezier(.2,.7,.2,1)" style-hover="background:#F1F0E2;color:#752C16"><span style="opacity:.6">Siguiente</span><span>{{ nextCat.cat }}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></button>
       </div>
     </div>
   </section>
@@ -401,9 +402,21 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
         </div>
         <form onSubmit="{{ submitForm }}" style="display:flex;flex-direction:column;gap:20px;margin-top:20px;padding-top:28px;border-top:1px solid rgba(241,240,226,.1)">
           <div data-col2="" style="display:grid;grid-template-columns:1fr 1fr;gap:20px 24px">
-            <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(241,240,226,.5)">Motivo
-              <select style="padding:10px 0;background:transparent;border:0;border-bottom:1px solid rgba(241,240,226,.25);font-size:16px;color:#F1F0E2;outline:none;cursor:pointer"><option>Grupo grande</option><option>Evento privado</option><option>Otro</option></select>
-            </label>
+            <div data-motivo="" style="position:relative;display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(241,240,226,.5)">
+              <span>Motivo</span>
+              <input type="hidden" name="motivo" value="{{ motivoVal }}">
+              <button type="button" onClick="{{ motivoToggle }}" aria-haspopup="listbox" aria-expanded="{{ motivoOpen }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;padding:10px 0;background:transparent;border:0;border-bottom:1px solid {{ motivoLine }};font:inherit;font-size:16px;letter-spacing:-.02em;color:{{ motivoFg }};text-align:left;cursor:pointer;outline:none;transition:border-color .25s cubic-bezier(.4,0,.2,1),color .25s" style-hover="border-bottom-color:#F2B880" style-focus="border-bottom-color:#F2B880">
+                <span>{{ motivoLabel }}</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:0 0 auto;color:#F2B880;transform:{{ motivoRot }};transition:transform .4s cubic-bezier(.2,.7,.2,1)"><path d="M6 9l6 6 6-6"></path></svg>
+              </button>
+              <div role="listbox" aria-label="Motivo" style="position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;display:flex;flex-direction:column;padding:6px;border-radius:12px;background:#9E4624;box-shadow:0 18px 40px rgba(40,14,6,.4);opacity:{{ motivoOp }};visibility:{{ motivoVis }};transform:{{ motivoT }};transform-origin:50% 0;transition:opacity .3s ease,transform .4s cubic-bezier(.2,.7,.2,1),visibility 0s linear {{ motivoDelay }}">
+                <sc-for list="{{ motivos }}" as="m" hint-placeholder-count="3">
+                  <button type="button" role="option" aria-selected="{{ m.sel }}" onClick="{{ m.pick }}" style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;padding:0 14px;border:0;border-radius:8px;background:{{ m.bg }};color:{{ m.fg }};font:inherit;font-size:15px;letter-spacing:-.02em;text-align:left;cursor:pointer;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:rgba(241,240,226,.12)">
+                    <span>{{ m.t }}</span><span style="font-size:13px;color:#F2B880;opacity:{{ m.check }}">●</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
             <label style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:rgba(241,240,226,.5)">Nombre
               <input type="text" style="padding:10px 0;background:transparent;border:0;border-bottom:1px solid rgba(241,240,226,.25);font-size:16px;color:#F1F0E2;outline:none" style-focus="border-bottom-color:#F2B880">
             </label>
@@ -469,19 +482,18 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Dónde estamos</span><span>Caracoles 219, San Pedro de Atacama, Chile</span></div>
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Horario</span><span>Lunes a domingo, 16:00–00:00</span></div>
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Contacto</span><a href="tel:+560000000000">+56 0 0000 0000</a><a href="mailto:correo@dominio.cl">correo@dominio.cl</a></div>
-        <div style="display:flex;gap:18px"><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
+        <div style="display:flex;gap:18px"><a href="#">Facebook</a><a href="https://www.instagram.com/caracol_barrestaurant/?hl=es" target="_blank" rel="noopener">Instagram</a><a href="#">TikTok</a></div>
       </div>
     </div>
     <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding:20px 0 28px;border-top:1px solid rgba(241,240,226,.1);font-size:12px;color:rgba(241,240,226,.55)">
-      <span>© 2026 Caracol Bar Restaurant. Todos los derechos reservados. Desarrollado por delta digital</span>
-      <div style="display:flex;gap:20px"><a href="#" style="color:rgba(241,240,226,.55)">Términos</a><a href="#" style="color:rgba(241,240,226,.55)">Privacidad</a><a href="#" style="color:rgba(241,240,226,.55)">Cookies</a></div>
+      <span>© 2026 Caracol Bar Restaurant. Todos los derechos reservados. Desarrollado por <a href="https://deltadigital.cl" target="_blank" rel="noopener" style="font-weight:700;color:#F1F0E2;transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F2B880">Delta Digital</a></span>
     </div>
   </footer>
 
 
-<button data-catfab="" onClick="{{ openCats }}" aria-label="Categorías de la carta" style="display:none;position:fixed;right:16px;bottom:16px;z-index:65;align-items:center;gap:10px;height:52px;padding:0 20px 0 16px;border-radius:999px;border:0;background:#F1F0E2;color:#752C16;font-size:14px;font-weight:600;letter-spacing:-.02em;box-shadow:0 10px 28px rgba(60,20,8,.35);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg><span data-catfab-label="">Carta</span></button>
+<button data-catfab="" onClick="{{ openCats }}" aria-label="Categorías de la carta" style="display:none;position:fixed;right:16px;bottom:16px;z-index:65;align-items:center;gap:10px;height:52px;padding:0 20px 0 16px;border-radius:999px;border:0;background:#F1F0E2;color:#752C16;font-size:14px;font-weight:600;letter-spacing:-.02em;box-shadow:0 10px 28px rgba(60,20,8,.35);cursor:pointer;opacity:0;pointer-events:none;transform:translateY(12px);transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg><span data-catfab-label="">{{ catName }}</span></button>
   <div aria-hidden="{{ catsHidden }}" onClick="{{ closeCats }}" style="position:fixed;inset:0;z-index:90;background:rgba(40,14,6,.55);opacity:{{ catsOp }};visibility:{{ catsVis }};transition:opacity .35s ease,visibility 0s linear {{ catsDelay }}"></div>
-  <div role="dialog" aria-label="Categorías de la carta" aria-hidden="{{ catsHidden }}" style="position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:78vh;overflow-y:auto;padding:20px 24px 28px;border-radius:20px 20px 0 0;background:#752C16;transform:{{ catsT }};visibility:{{ catsVis }};transition:transform .4s cubic-bezier(.2,.7,.2,1),visibility 0s linear {{ catsDelay }}">
+  <div role="dialog" data-lenis-prevent="" aria-label="Categorías de la carta" aria-hidden="{{ catsHidden }}" style="position:fixed;left:0;right:0;bottom:0;z-index:91;max-height:78vh;overflow-y:auto;overscroll-behavior:contain;padding:20px 24px 28px;border-radius:20px 20px 0 0;background:#752C16;transform:{{ catsT }};visibility:{{ catsVis }};transition:transform .4s cubic-bezier(.2,.7,.2,1),visibility 0s linear {{ catsDelay }}">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
       <span style="display:flex;align-items:center;gap:10px;font-size:18px;font-weight:600;letter-spacing:-.04em"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"></path><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"></path></svg><span>Carta y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.15em">precios</em></span></span>
       <button onClick="{{ closeCats }}" aria-label="Cerrar" style="width:44px;height:44px;border-radius:50%;border:0;background:rgba(241,240,226,.1);color:#F1F0E2;font-size:20px;cursor:pointer">×</button>
@@ -563,6 +575,9 @@ class Component extends DCLogic {
   }
 
   componentDidMount() {
+    this._mo = e => { if (this.state.motivoOpen && !(e.target.closest && e.target.closest('[data-motivo]'))) this.setState({ motivoOpen: false }); };
+    this._mk = e => { if (e.key === 'Escape' && this.state.motivoOpen) this.setState({ motivoOpen: false }); };
+    document.addEventListener('pointerdown', this._mo); document.addEventListener('keydown', this._mk);
     this.initGmap();
     if (window.ccOnLang) this._lu = window.ccOnLang(l => { if (l !== this.state.lang) this.setState({ lang: l }); });
     setTimeout(() => { const l = window.ccGetLang && window.ccGetLang(); if (l && l !== this.state.lang) this.setState({ lang: l }); }, 200);
@@ -626,6 +641,7 @@ class Component extends DCLogic {
   }
 
   componentWillUnmount() {
+    document.removeEventListener('pointerdown', this._mo); document.removeEventListener('keydown', this._mk);
     this._gmapDead = true;
     if (this._lu) this._lu();
     cancelAnimationFrame(this._hl);
@@ -725,18 +741,6 @@ class Component extends DCLogic {
     { const fab = q1('[data-catfab]'), sec = q1('#carta');
       if (fab && sec) { const r = sec.getBoundingClientRect(); const on = r.top < vh * 0.5 && r.bottom > vh * 0.6;
         if (on !== this._fabOn) { this._fabOn = on; fab.style.opacity = on ? 1 : 0; fab.style.pointerEvents = on ? 'auto' : 'none'; fab.style.transform = on ? 'translateY(0)' : 'translateY(12px)'; } } }
-    let act = 0; cats.forEach((c, i) => { if (c.getBoundingClientRect().top < vh * 0.4) act = i; });
-    if (act !== this._act) {
-      this._act = act;
-      if (this.state.catAct !== act) this.setState({ catAct: act });
-      const lb = q1('[data-catfab-label]'); const cn = cats[act] && cats[act].querySelector('h3'); if (lb && cn) lb.textContent = cn.textContent;
-      qa('[data-ci]').forEach((b, i) => b.style.color = i === act ? '#F2B880' : 'rgba(241,240,226,.6)');
-      qa('[data-cb]').forEach((b, i) => {
-        b.style.background = i === act ? '#F1F0E2' : 'rgba(241,240,226,.1)';
-        b.style.color = i === act ? '#752C16' : '#F1F0E2';
-        if (i === act && b.parentElement) b.parentElement.scrollTo({ left: b.offsetLeft - 36, behavior: 'smooth' });
-      });
-    }
     qa('[data-expand]').forEach(el => {
       const r = el.getBoundingClientRect();
       const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.95)));
@@ -775,6 +779,17 @@ class Component extends DCLogic {
     el.style.scrollSnapType = 'none'; this.go(el, this.idx(el) + d);
     clearTimeout(this._tn); this._tn = setTimeout(() => { el.style.scrollSnapType = 'x mandatory'; }, 700);
   }
+  pickCat(i) {
+    this.setState({ catAct: i }, () => {
+      const bar = document.querySelector('[data-catbar]'), b = document.querySelector('[data-cb="' + i + '"]');
+      if (bar && b && bar.offsetParent) bar.scrollTo({ left: b.offsetLeft - 36, behavior: 'smooth' });
+      const el = document.getElementById('carta-list'); if (!el) return;
+      const off = window.innerWidth < 861 ? -130 : -88;
+      if (el.getBoundingClientRect().top < -off - 10) {
+        if (this._lenis) this._lenis.scrollTo(el, { offset: off }); else window.scrollTo({ top: el.getBoundingClientRect().top + scrollY + off, behavior: 'smooth' });
+      }
+    });
+  }
   scrollToId(id) {
     const t = document.getElementById(id); if (!t) return;
     if (this._lenis) this._lenis.scrollTo(t, { offset: -88 }); else window.scrollTo({ top: t.getBoundingClientRect().top + scrollY - 88, behavior: 'smooth' });
@@ -798,7 +813,8 @@ class Component extends DCLogic {
       C("Postres", "Cocina", "", [["Éclair del día", "$6.500"], ["Mousse de chocolate", "$8.800"], ["Crème brûlée", "$7.600"], ["Plátano flambé", "$9.000", "Con tostada francesa y helado de vainilla"], ["Crumble de fruta al horno de barro", "$11.000", "Con helado de vainilla"]]),
       C("Bebidas calientes", "Barra", "", [["Té de hoja de la casa", "$3.500"], ["Espresso simple", "$2.000"], ["Espresso doble", "$2.800"], ["Americano", "$2.800"]])
     ];
-    const menu = raw.map((c, i) => ({ ...c, id: 'cat-' + i, note: c.note || null, count: String(c.items.length).padStart(2, '0'), go: () => this.scrollToId('cat-' + i), pick: () => { this.setState({ cats: false }); setTimeout(() => this.scrollToId('cat-' + i), 60); }, fg: (this.state.catAct || 0) === i ? '#F2B880' : '#F1F0E2' }));
+    const menu = raw.map((c, i) => ({ ...c, id: 'cat-' + i, note: c.note || null, count: String(c.items.length).padStart(2, '0'), go: () => this.pickCat(i), pick: () => { this.setState({ cats: false }); setTimeout(() => this.pickCat(i), 60); }, fg: (this.state.catAct || 0) === i ? '#F2B880' : '#F1F0E2', rail: (this.state.catAct || 0) === i ? '#F2B880' : 'rgba(241,240,226,.6)', pbg: (this.state.catAct || 0) === i ? '#F1F0E2' : 'rgba(241,240,226,.1)', pfg: (this.state.catAct || 0) === i ? '#752C16' : '#F1F0E2' }));
+    const ai = Math.min(menu.length - 1, this.state.catAct || 0), nx = menu[(ai + 1) % menu.length];
     const total = menu.reduce((t, c) => t + c.items.length, 0);
     const open = this.state.menuOpen;
     const sand = raw[9].items;
@@ -853,7 +869,7 @@ class Component extends DCLogic {
         { n: '03', t: 'Elige la salsa', d: 'Ajo, ají, verde o aceituna.' },
         { n: '04', t: 'A la mesa', d: 'En baguette, con papas fritas.' }
       ],
-      menu,
+      menu, menuShown: [menu[ai]], nextCat: { cat: nx.cat, go: nx.go }, catName: menu[ai].cat,
       metaCarta: 'Carta junio 2026 · ' + total + ' platos',
       noches, nochesTotal: noches.length,
       nochesPrev: () => this.nav('noches', -1), nochesNext: () => this.nav('noches', 1),
@@ -868,6 +884,11 @@ class Component extends DCLogic {
         { tag: 'Novedades', t: 'La agenda de música en vivo de este mes', img: 'assets/b2.jpg' },
         { tag: 'Guía de San Pedro', t: 'Cómo llegar al Valle de la Luna por tu cuenta', img: 'assets/b5.jpg' }
       ].map(p => ({ ...p, d: '00 mes 0000', href: 'Blog%20Articulo%20Caracol.dc.html' })),
+      ...(() => { const mo = !!this.state.motivoOpen, mv = this.state.motivo || '';
+        return { motivoOpen: mo ? 'true' : 'false', motivoVal: mv, motivoLabel: mv || 'Seleccionar un motivo', motivoFg: mv ? '#F1F0E2' : 'rgba(241,240,226,.45)', motivoLine: mo ? '#F2B880' : 'rgba(241,240,226,.25)', motivoRot: mo ? 'rotate(180deg)' : 'rotate(0deg)',
+          motivoOp: mo ? 1 : 0, motivoVis: mo ? 'visible' : 'hidden', motivoDelay: mo ? '0s' : '.4s', motivoT: mo ? 'translateY(0) scale(1)' : 'translateY(-6px) scale(.98)',
+          motivoToggle: () => this.setState(s => ({ motivoOpen: !s.motivoOpen })),
+          motivos: ['Grupo grande', 'Evento privado', 'Otro'].map(o => ({ t: o, sel: mv === o ? 'true' : 'false', bg: mv === o ? 'rgba(241,240,226,.1)' : 'transparent', fg: '#F1F0E2', check: mv === o ? 1 : 0, pick: () => this.setState({ motivo: o, motivoOpen: false }) })) }; })(),
       sendLabel: this.state.sent ? 'Mensaje enviado' : 'Enviar',
       submitForm: e => { e.preventDefault(); this.setState({ sent: true }); },
       showCookie: (this.props.cookieBanner ?? true) && this.state.cookie ? true : null,

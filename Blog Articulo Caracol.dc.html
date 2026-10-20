@@ -35,6 +35,7 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
 }
 [data-hdr] a,[data-hdr] button{white-space:nowrap}
 @media (max-width:1100px){[data-hdesk]{display:none!important}[data-hmob]{display:grid!important}}
+@media (max-width:960px){[data-artgrid]{grid-template-columns:1fr!important}[data-artgrid]>*{grid-column:1/-1!important}[data-arttoc]{position:static!important;margin-bottom:48px}}
 @media (max-width:860px){
 [data-hero-text] h1{font-size:13vw!important}
 [data-desk]{display:none!important}
@@ -111,7 +112,7 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
   <div data-progress="" style="position:fixed;left:0;top:64px;height:2px;width:0;z-index:61;background:#F2B880"></div>
   <main data-screen-label="Blog artículo" style="padding:0 36px">
     <article>
-      <header style="max-width:960px;margin:0 auto;padding-top:clamp(120px,12vw,168px);display:flex;flex-direction:column;gap:28px">
+      <header style="max-width:1200px;margin:0 auto;padding-top:clamp(120px,12vw,168px);display:flex;flex-direction:column;gap:28px">
         <nav aria-label="Migas" style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg><a href="index.html" style="color:rgba(241,240,226,.6)" style-hover="color:#F1F0E2">Inicio</a><span>/</span><a href="Blog%20Caracol.dc.html" style="color:rgba(241,240,226,.6)" style-hover="color:#F1F0E2">Blog</a><span>/</span><span style="color:#F1F0E2">Entrada</span></nav>
         <h1 style="margin:0;font-weight:600;font-size:clamp(40px,5.4vw,88px);line-height:1;letter-spacing:-.065em;text-wrap:balance">Qué hacer en San Pedro de Atacama por la tarde</h1>
         <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding-top:20px;border-top:1px solid rgba(241,240,226,.1);font-size:13px;color:rgba(241,240,226,.65)">
@@ -128,9 +129,9 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
       <div data-ir="" style="max-width:1200px;margin:48px auto 0;aspect-ratio:16/9;overflow:hidden;border-radius:4px;background:#752C16">
         <img src="assets/b1.jpg" alt="Qué hacer en San Pedro de Atacama por la tarde" style="width:100%;height:100%;object-fit:cover;display:block">
       </div>
-      <div style="max-width:760px;margin:64px auto 0">
-        <p style="margin:0 0 40px;font-size:clamp(22px,2vw,28px);line-height:1.25;letter-spacing:-.04em;color:#F1F0E2">Qué hacer entre las 16:00 y la medianoche: por dónde caminar, dónde ver el atardecer, qué comer y dónde escuchar música.</p>
-        <nav aria-label="En este artículo" style="margin:0 0 48px;padding:24px 28px;border-radius:12px;background:rgba(241,240,226,.08)">
+      <div data-artgrid="" style="max-width:1200px;margin:64px auto 0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;align-items:start">
+        <aside data-arttoc="" style="grid-column:1/4;position:sticky;top:110px">
+        <nav aria-label="En este artículo" style="margin:0;padding:24px 28px;border-radius:12px;background:rgba(241,240,226,.08)">
           <p style="margin:0 0 14px;font-size:12px;color:rgba(241,240,226,.6)">En este artículo</p>
           <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:16px;line-height:1.4;letter-spacing:-.02em">
             <li><a href="#excursion" style="color:#F1F0E2" style-hover="color:#F2B880">Después de la excursión</a></li>
@@ -139,6 +140,9 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
             <li><a href="#noche" style="color:#F1F0E2" style-hover="color:#F2B880">La noche</a></li>
           </ol>
         </nav>
+        </aside>
+        <div style="grid-column:4/13;min-width:0">
+        <p style="margin:0 0 48px;font-size:clamp(22px,2vw,28px);line-height:1.25;letter-spacing:-.04em;color:#F1F0E2">Qué hacer entre las 16:00 y la medianoche: por dónde caminar, dónde ver el atardecer, qué comer y dónde escuchar música.</p>
         <h2 id="excursion" style="margin:72px 0 20px;font-weight:600;font-size:clamp(30px,3vw,44px);line-height:1.05;letter-spacing:-.055em;color:#F1F0E2;scroll-margin-top:110px;margin-top:0">Después de la excursión</h2>
         <p style="margin:0 0 24px;font-size:18px;line-height:1.65;letter-spacing:-.01em;color:rgba(241,240,226,.84)">Muchas excursiones de la mañana vuelven al pueblo cerca del mediodía, y la tarde queda libre. Es el mejor momento para recorrer San Pedro a pie, sin el calor fuerte del mediodía y antes de que baje la temperatura en la noche.</p>
         <p style="margin:0 0 24px;font-size:18px;line-height:1.65;letter-spacing:-.01em;color:rgba(241,240,226,.84)">Caracol abre a las 16:00 en Caracoles 219, la calle principal del pueblo. La cocina abre con el local y cierra con él, así que se puede llegar a cualquier hora a comer.</p>
@@ -181,9 +185,10 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
             <li>Caracoles 219, en la calle principal del pueblo.</li>
           </ul>
         </div>
+        </div>
       </div>
     </article>
-    <section style="max-width:960px;margin:96px auto 0;padding:clamp(28px,4vw,48px);border-radius:12px;background:#752C16;display:flex;flex-wrap:wrap;gap:24px 48px;align-items:center;justify-content:space-between">
+    <section style="max-width:1200px;margin:96px auto 0;padding:clamp(28px,4vw,48px);border-radius:12px;background:#752C16;display:flex;flex-wrap:wrap;gap:24px 48px;align-items:center;justify-content:space-between">
       <div style="display:flex;flex-direction:column;gap:10px">
         <h3 style="margin:0;font-weight:600;font-size:clamp(32px,3.4vw,52px);line-height:1;letter-spacing:-.06em"><span>¿Vienes</span> <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">hoy?</em></h3>
         <p style="margin:0;font-size:15px;color:rgba(241,240,226,.72)">Abierto todos los días de 16:00 a 00:00.</p>
@@ -223,12 +228,11 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Dónde estamos</span><span>Caracoles 219, San Pedro de Atacama, Chile</span></div>
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Horario</span><span>Lunes a domingo, 16:00–00:00</span></div>
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Contacto</span><a href="tel:+560000000000">+56 0 0000 0000</a><a href="mailto:correo@dominio.cl">correo@dominio.cl</a></div>
-        <div style="display:flex;gap:18px"><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
+        <div style="display:flex;gap:18px"><a href="#">Facebook</a><a href="https://www.instagram.com/caracol_barrestaurant/?hl=es" target="_blank" rel="noopener">Instagram</a><a href="#">TikTok</a></div>
       </div>
     </div>
     <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding:20px 0 28px;border-top:1px solid rgba(241,240,226,.1);font-size:12px;color:rgba(241,240,226,.55)">
-      <span>© 2026 Caracol Bar Restaurant. Todos los derechos reservados. Desarrollado por delta digital</span>
-      <div style="display:flex;gap:20px"><a href="#" style="color:rgba(241,240,226,.55)">Términos</a><a href="#" style="color:rgba(241,240,226,.55)">Privacidad</a><a href="#" style="color:rgba(241,240,226,.55)">Cookies</a></div>
+      <span>© 2026 Caracol Bar Restaurant. Todos los derechos reservados. Desarrollado por <a href="https://deltadigital.cl" target="_blank" rel="noopener" style="font-weight:700;color:#F1F0E2;transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F2B880">Delta Digital</a></span>
     </div>
   </footer>
 </div>
