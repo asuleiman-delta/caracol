@@ -72,10 +72,22 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
         <a data-nl="{{ n.id }}" href="{{ n.href }}" style="color:rgba(241,240,226,.85);transition:color .25s cubic-bezier(.4,0,.2,1)">{{ n.label }}</a>
       </sc-for>
     </nav>
-    <div data-hdesk="" style="display:flex;align-items:center;gap:12px;padding:0 24px;border-left:1px solid rgba(241,240,226,.1);font-size:12px">
-      <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
-        <button onClick="{{ l.pick }}" style="background:none;border:0;padding:4px 0;cursor:pointer;color:{{ l.col }};transition:color .2s">{{ l.code }}</button>
-      </sc-for>
+    <div data-hdesk="" style="position:relative;display:flex;align-items:center;padding:0 20px;border-left:1px solid rgba(241,240,226,.1)">
+      <button onClick="{{ langToggle }}" aria-haspopup="listbox" aria-expanded="{{ langExp }}" aria-label="Idioma" style="display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid rgba(241,240,226,.22);border-radius:999px;background:transparent;color:#F1F0E2;font-size:13px;font-weight:600;letter-spacing:.02em;cursor:pointer;transition:background-color .25s cubic-bezier(.4,0,.2,1),border-color .25s" style-hover="background:rgba(241,240,226,.1);border-color:rgba(241,240,226,.4)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M2 12h20"></path><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <span>{{ langCode }}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="2" style="transform:{{ langRot }};transition:transform .35s cubic-bezier(.2,.7,.2,1)"><path d="m6 9 6 6 6-6"></path></svg>
+      </button>
+      <sc-if value="{{ langOpen }}" hint-placeholder-val="{{ false }}">
+        <div onClick="{{ langClose }}" style="position:fixed;inset:0;z-index:1"></div>
+        <div role="listbox" aria-label="Idioma" style="position:absolute;top:calc(100% + 8px);right:16px;z-index:2;min-width:200px;padding:6px;border-radius:16px;background:#F1F0E2;box-shadow:0 18px 40px rgba(40,14,6,.35);display:flex;flex-direction:column;gap:2px">
+          <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+            <button role="option" aria-selected="{{ l.sel }}" onClick="{{ l.pick }}" style="display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:44px;padding:0 14px;border:0;border-radius:10px;font-size:15px;letter-spacing:-.02em;text-align:left;cursor:pointer;background:{{ l.bg }};color:{{ l.fg }};transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:{{ l.hov }}">
+              <span>{{ l.name }}</span><span style="font-size:12px;font-weight:600;opacity:.6">{{ l.code }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </sc-if>
     </div>
     <a data-hdesk="" data-pill="" href="#carta" style="display:flex;align-items:center;gap:10px;padding:0 36px;border-left:1px solid rgba(241,240,226,.1);font-size:14px;letter-spacing:-.02em;transition:background-color .25s cubic-bezier(.4,0,.2,1)" style-hover="background:rgba(241,240,226,.1);color:#F1F0E2">Ver carta <svg data-ic="" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="transition:transform .18s cubic-bezier(.2,0,0,1)"><path d="M7 17L17 7M7 7h10v10"></path></svg></a>
     <button data-hmob="" onClick="{{ openMenu }}" aria-label="Abrir menú" style="width:64px;display:none;place-items:center;background:none;border:0;border-left:1px solid rgba(241,240,226,.1);cursor:pointer">
@@ -100,10 +112,13 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
       <div style="display:flex;flex-direction:column;gap:6px;padding-top:24px;border-top:1px solid rgba(241,240,226,.1);font-size:15px;color:rgba(241,240,226,.6)">
         <span>Caracoles 219, San Pedro de Atacama</span><span>Lunes a domingo, 16:00–00:00</span><span>+56 0 0000 0000</span>
       </div>
-      <div style="display:flex;gap:16px;font-size:13px">
-        <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
-          <button onClick="{{ l.pick }}" style="background:none;border:0;padding:4px 0;cursor:pointer;color:{{ l.col }}">{{ l.code }}</button>
-        </sc-for>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <p style="margin:0;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(241,240,226,.6)">Idioma</p>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px;border-radius:999px;background:rgba(241,240,226,.1)">
+          <sc-for list="{{ langs }}" as="l" hint-placeholder-count="4">
+            <button onClick="{{ l.pick }}" style="min-height:44px;border:0;border-radius:999px;font-size:14px;font-weight:600;cursor:pointer;background:{{ l.mbg }};color:{{ l.mfg }};transition:background-color .25s,color .25s">{{ l.code }}</button>
+          </sc-for>
+        </div>
       </div>
     </div>
   </div>
@@ -450,10 +465,10 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
     <div data-col3="" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(241,240,226,.1);border-top:1px solid rgba(241,240,226,.1);border-bottom:1px solid rgba(241,240,226,.1);margin:0 -36px">
       <sc-for list="{{ posts }}" as="p" hint-placeholder-count="3">
         <a href="{{ p.href }}" style="background:#9E4624;padding:28px 36px 36px;display:flex;flex-direction:column;gap:18px;color:#F1F0E2" style-hover="color:#F1F0E2">
-          <div data-ir="" style="aspect-ratio:4/3;overflow:hidden;border-radius:4px;background:#752C16">
+          <div data-ir="" style="aspect-ratio:4/5;overflow:hidden;border-radius:4px;background:#752C16">
             <img src="{{ p.img }}" alt="{{ p.t }}" style="width:100%;height:100%;object-fit:cover;display:block">
           </div>
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:rgba(241,240,226,.55)"><span>{{ p.tag }}</span><span>{{ p.d }}</span></div>
+          <div style="display:flex;font-size:12px;color:rgba(241,240,226,.55)"><span>{{ p.tag }}</span></div>
           <span style="font-size:22px;font-weight:600;line-height:1.1;letter-spacing:-.05em;text-wrap:balance">{{ p.t }}</span>
         </a>
       </sc-for>
@@ -471,21 +486,21 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
     <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:clamp(64px,7vw,112px) 0 clamp(48px,5vw,72px)">
       <div style="grid-column:1/4;display:flex;flex-direction:column;gap:20px">
         <img src="assets/logo-crema.png" alt="Caracol Atacama" style="width:110px;height:auto;display:block">
-        <span style="font-size:13px;line-height:1.4;color:rgba(241,240,226,.6)">Bar y restaurante con música en vivo y terraza, en pleno centro de San Pedro de Atacama.</span>
+        <span style="font-size:12px;line-height:1.4;color:rgba(241,240,226,.6)">Bar y restaurante con música en vivo y terraza, en pleno centro de San Pedro de Atacama.</span>
       </div>
       <nav style="grid-column:4/9;display:flex;flex-direction:column">
         <sc-for list="{{ navLinks }}" as="n" hint-placeholder-count="5">
-          <a href="{{ n.href }}" style="font-size:clamp(28px,3vw,48px);font-weight:600;line-height:1.15;letter-spacing:-.06em;transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F2B880">+{{ n.label }}</a>
+          <a href="{{ n.href }}" style="font-size:clamp(20px,1.8vw,30px);font-weight:600;line-height:1.25;letter-spacing:-.05em;transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F2B880">+{{ n.label }}</a>
         </sc-for>
       </nav>
-      <div style="grid-column:9/13;display:flex;flex-direction:column;gap:24px;font-size:14px;line-height:1.45">
+      <div style="grid-column:9/13;display:flex;flex-direction:column;gap:20px;font-size:13px;line-height:1.45">
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Dónde estamos</span><span>Caracoles 219, San Pedro de Atacama, Chile</span></div>
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Horario</span><span>Lunes a domingo, 16:00–00:00</span></div>
         <div style="display:flex;flex-direction:column;gap:4px"><span style="font-size:12px;color:rgba(241,240,226,.5)">Contacto</span><a href="tel:+560000000000">+56 0 0000 0000</a><a href="mailto:correo@dominio.cl">correo@dominio.cl</a></div>
         <div style="display:flex;gap:18px"><a href="#">Facebook</a><a href="https://www.instagram.com/caracol_barrestaurant/?hl=es" target="_blank" rel="noopener">Instagram</a><a href="#">TikTok</a></div>
       </div>
     </div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding:20px 0 28px;border-top:1px solid rgba(241,240,226,.1);font-size:12px;color:rgba(241,240,226,.55)">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;padding:20px 0 28px;border-top:1px solid rgba(241,240,226,.1);font-size:11px;color:rgba(241,240,226,.55)">
       <span>© 2026 Caracol Bar Restaurant. Todos los derechos reservados. Desarrollado por <a href="https://deltadigital.cl" target="_blank" rel="noopener" style="font-weight:700;color:#F1F0E2;transition:color .25s cubic-bezier(.4,0,.2,1)" style-hover="color:#F2B880">Delta Digital</a></span>
     </div>
   </footer>
@@ -835,7 +850,9 @@ class Component extends DCLogic {
       heroRef: this.heroRef,
       heroLines: (({ ES: ['Caracol,', 'bar y restaurante', '*en *San *Pedro', '*de *Atacama'], EN: ['Caracol,', 'bar and restaurant', '*in *San *Pedro', '*de *Atacama'], PT: ['Caracol,', 'bar e restaurante', '*em *San *Pedro', '*de *Atacama'], FR: ['Caracol,', 'bar et restaurant', '*à *San *Pedro', '*de *Atacama'] })[this.state.lang] || ['Caracol,', 'bar y restaurante', '*en *San *Pedro', '*de *Atacama']).map((l, i) => ({ fs: i === 1 ? '.7em' : '1em', mg: i === 1 ? '.12em 0 .18em' : '0', words: l.split(' ').map(t => ({ t: t.replace('*', ''), it: t[0] === '*' ? true : null, rom: t[0] !== '*' ? true : null })) })),
       loaderOp: ld ? 0 : 1, loaderVis: ld ? 'hidden' : 'visible', loaderDelay: ld ? '.7s' : '0s', loaderHidden: ld ? 'true' : 'false',
-      langs: ['ES', 'EN', 'PT', 'FR'].map(code => ({ code, col: this.state.lang === code ? '#F2B880' : 'rgba(241,240,226,.6)', pick: () => { this.setState({ lang: code }); if (window.ccSetLang) window.ccSetLang(code); } })),
+      langCode: this.state.lang || 'ES', langOpen: !!this.state.langOpen, langExp: this.state.langOpen ? 'true' : 'false', langRot: this.state.langOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+      langToggle: () => this.setState(s => ({ langOpen: !s.langOpen })), langClose: () => this.setState({ langOpen: false }),
+      langs: [['ES', 'Español'], ['EN', 'English'], ['PT', 'Português'], ['FR', 'Français']].map(([code, name]) => { const on = (this.state.lang || 'ES') === code; return { code, name, sel: on ? 'true' : 'false', bg: on ? '#752C16' : 'transparent', fg: on ? '#F1F0E2' : '#752C16', hov: on ? '#752C16' : 'rgba(117,44,22,.08)', mbg: on ? '#F1F0E2' : 'transparent', mfg: on ? '#752C16' : '#F1F0E2', pick: () => { this.setState({ lang: code, langOpen: false }); if (window.ccSetLang) window.ccSetLang(code); } }; }),
       navLinks: [
         { id: 'cocina', label: 'Cocina y barra', href: '#cocina' }, { id: 'carta', label: 'Carta', href: '#carta' }, { id: 'musica', label: 'Música', href: '#musica' },
         { id: 'visitanos', label: 'Visítanos', href: '#visitanos' }, { id: 'blog', label: 'Blog', href: 'Blog%20Caracol.dc.html' }
