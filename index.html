@@ -196,41 +196,26 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
       </div>
       <div style="grid-column:9/13;display:flex;flex-direction:column;justify-content:space-between;gap:48px">
         <p data-rv="" style="margin:0;font-size:clamp(17px,1.5vw,22px);line-height:1.2;letter-spacing:-.04em;color:rgba(241,240,226,.85)">Caracol es cocina, barra y música en vivo en Caracoles 219. Al fondo hay una terraza grande para los que prefieren estar afuera. Abierto todos los días de 16:00 a 00:00.</p>
-        <div style="display:flex;flex-direction:column">
-          <div style="display:flex;flex-direction:column;gap:12px;padding:24px 0;border-top:1px solid rgba(241,240,226,.1)">
-            <span data-count="{{ total }}" style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(64px,6.5vw,112px);line-height:1;padding-bottom:.12em">{{ total }}</span>
-            <span style="font-size:13px;color:rgba(241,240,226,.55)">platos en la carta de junio</span>
+        <a data-rv="" href="https://www.tripadvisor.es/Restaurant_Review-g303681-d32763623-Reviews-Caracol_Bar_Restaurant-San_Pedro_de_Atacama_Antofagasta_Region.html" target="_blank" rel="noopener" style="display:flex;flex-direction:column;color:#F1F0E2;text-decoration:none">
+          <div style="display:flex;flex-direction:column;gap:14px;padding:24px 0;border-top:1px solid rgba(241,240,226,.1)">
+            <span style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(241,240,226,.55)"><img src="assets/tripadvisor.png" alt="" width="22" height="22" style="display:block;width:22px;height:22px;object-fit:contain"><span>Tripadvisor</span></span>
+            <div style="display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap">
+              <span style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(64px,6.5vw,112px);line-height:1;padding-bottom:.08em">4,6</span>
+              <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:clamp(10px,1.2vw,20px)">
+                <div role="img" aria-label="4,6 de 5" style="display:flex;gap:4px"><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#F2B880" stroke="#F2B880" stroke-width="1.5"></circle></svg><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#F2B880" stroke="#F2B880" stroke-width="1.5"></circle></svg><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#F2B880" stroke="#F2B880" stroke-width="1.5"></circle></svg><svg width="22" height="22" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10.5" fill="#F2B880" stroke="#F2B880" stroke-width="1.5"></circle></svg><svg width="22" height="22" viewBox="0 0 24 24"><defs><clipPath id="cc-half"><rect x="0" y="0" width="12" height="24"></rect></clipPath></defs><circle cx="12" cy="12" r="10.5" fill="#F2B880" clip-path="url(#cc-half)"></circle><circle cx="12" cy="12" r="10.5" fill="none" stroke="#F2B880" stroke-width="1.5"></circle></svg></div>
+                <span style="font-size:13px;color:rgba(241,240,226,.55)">45 opiniones</span>
+              </div>
+            </div>
           </div>
           <div style="display:flex;flex-direction:column;gap:12px;padding:24px 0;border-top:1px solid rgba(241,240,226,.1)">
-            <span data-count="7" style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(64px,6.5vw,112px);line-height:1;padding-bottom:.12em">7</span>
-            <span style="font-size:13px;color:rgba(241,240,226,.55)">días a la semana, de 16:00 a 00:00</span>
+            <span style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(40px,3.6vw,60px);line-height:1">N.º 28</span>
+            <span style="font-size:13px;color:rgba(241,240,226,.55)">de 107 restaurantes en San Pedro de Atacama</span>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section data-sg="" data-screen-label="04 Galería" style="position:relative;height:500vh;background:#752C16">
-    <div data-sgrid="" style="position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 60px;overflow:hidden">
-      <div style="position:relative;overflow:hidden">
-        <sc-for list="{{ gal }}" as="g" hint-placeholder-count="5">
-          <div data-sl="" style="position:absolute;inset:0;z-index:{{ $index }};opacity:{{ g.op }};transition:opacity 1.3s ease-in-out;overflow:hidden">
-            <img src="{{ g.img }}" alt="{{ g.cap }}" style="width:100%;height:100%;object-fit:cover;object-position:{{ g.pos }};display:block;transform:scale(1.06);transition:transform 1.6s ease-out">
-            <div style="position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(0deg,rgba(117,44,22,.92) 0%,rgba(117,44,22,.45) 50%,rgba(117,44,22,0) 100%)"></div>
-
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 0;border-top:1px solid rgba(241,240,226,.1);font-size:14px;letter-spacing:-.02em;color:#F2B880;transition:color 1.4s cubic-bezier(.2,.7,.2,1)" style-hover="color:#F1F0E2">
+            <span>Ver opiniones en Tripadvisor</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"></path></svg>
           </div>
-        </sc-for>
-        <div style="position:absolute;z-index:15;left:36px;right:36px;bottom:clamp(36px,7vh,72px);display:flex;flex-direction:column;gap:10px;pointer-events:none">
-          <span style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(40px,4.4vw,72px);line-height:1;letter-spacing:-.02em">El local</span>
-          <span style="font-size:14px;color:rgba(241,240,226,.8)">Caracoles 219, San Pedro de Atacama</span>
-        </div>
-        <div data-mob="" style="position:absolute;z-index:20;left:0;right:0;top:64px;height:2px;background:rgba(241,240,226,.2)"><span data-mbar="" style="display:block;height:100%;width:0;background:#F2B880"></span></div>
-      </div>
-      <div data-desk="" style="background:#B86240;display:flex;flex-direction:column;align-items:center;padding:96px 0 36px;gap:20px">
-        <div data-track="" style="position:relative;flex:1;width:1px;background:rgba(241,240,226,.35)">
-          <span data-dot="" style="position:absolute;left:-4px;top:0;width:9px;height:9px;border-radius:50%;background:#F1F0E2"></span>
-        </div>
-        <span data-sgc="" style="font-size:12px">01</span>
+        </a>
       </div>
     </div>
   </section>
@@ -338,8 +323,8 @@ a:hover [data-ir] img,article:hover [data-ir] img{filter:brightness(1.05)}
     <div data-g12="" style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:24px;padding:0 36px clamp(40px,5vw,72px)">
       <div style="grid-column:1/4;display:flex;align-items:center;gap:8px;align-self:start;font-size:12px;color:rgba(241,240,226,.6)"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F2B880" stroke-width="1.6"><path d="M12 2v20M2 12h20M4.9 4.9l14.2 14.2M19.1 4.9L4.9 19.1"></path></svg>Las noches</div>
       <h2 data-split="" style="grid-column:4/10;margin:0;font-weight:600;font-size:clamp(36px,4.2vw,72px);line-height:1.1;letter-spacing:-.065em">
-        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Música en vivo</span></span>
-        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">terraza</em></span></span>
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">Música</span></span>
+        <span style="display:block;overflow:hidden"><span data-ln="" style="display:block">y <em style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1em;line-height:.9;letter-spacing:-.03em">karaoke</em></span></span>
       </h2>
       <p data-rv="" style="grid-column:10/13;align-self:end;margin:0;font-size:15px;line-height:1.3;letter-spacing:-.02em;color:rgba(241,240,226,.6)">Percusión, bandas y karaoke en el salón, varias noches por semana.</p>
     </div>
@@ -862,7 +847,7 @@ class Component extends DCLogic {
       menuOp: open ? 1 : 0, menuVis: open ? 'visible' : 'hidden', menuDelay: open ? '0s' : '.5s', menuHidden: open ? 'false' : 'true',
       pillars: [
         { t: 'Restaurante', d: '/ ' + (menu.length - 1) + ' categorías', img: 'assets/ra1.jpg', href: '#carta' },
-        { t: 'Bar', d: '/ cocteles y schop', img: 'assets/ba1.jpg', href: '#carta' },
+        { t: 'Bar', d: '/ cocteles y schop de cerveza artesanal', img: 'assets/ba1.jpg', href: '#carta' },
         { t: 'Música', d: '/ en vivo', img: 'assets/n1.jpg', href: '#musica' }
       ],
       total,
